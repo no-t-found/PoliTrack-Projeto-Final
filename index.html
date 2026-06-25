@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PoliTrack — Aplicação para transparência política</title>
+
+<!-- ════════════════════════════════════════════════════════
+     CSS — carregado pela ordem: tokens → base → componentes
+     partilhados → uma secção por ficheiro (04 a 10).
+     Edita o ficheiro correspondente à secção que queres mudar.
+═══════════════════════════════════════════════════════════ -->
+<link rel="stylesheet" href="css/01-tokens.css">
+<link rel="stylesheet" href="css/02-base.css">
+<link rel="stylesheet" href="css/03-components.css">
+<link rel="stylesheet" href="css/04-section-capa.css">
+<link rel="stylesheet" href="css/05-section-enquadramento.css">
+<link rel="stylesheet" href="css/06-section-manifesto.css">
+<link rel="stylesheet" href="css/08-section-videos.css">
+<link rel="stylesheet" href="css/09-section-download.css">
+<link rel="stylesheet" href="css/10-section-creditos.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     UI PERSISTENTE — visível em todas as secções
+═══════════════════════════════════════════════════════════ -->
+<button id="home-btn" onclick="goHome()">↑ Início</button>
+<div id="kiosk-pip">Modo exposição</div>
+<div id="nav-dots">
+  <div class="dot on"  onclick="goTo(0)" title="Capa"></div>
+  <div class="dot"     onclick="goTo(1)" title="Enquadramento"></div>
+  <div class="dot"     onclick="goTo(2)" title="O que é"></div>
+  <div class="dot"     onclick="goTo(3)" title="Demonstração"></div>
+  <div class="dot"     onclick="goTo(4)" title="Download"></div>
+  <div class="dot"     onclick="goTo(5)" title="Créditos"></div>
+</div>
+
+<div id="root">
+
+  <!-- ══ S1 — CAPA ══════════════════════════════════════════
+       Frame Figma: 520-11820 -->
+  <section id="s1">
+    <img class="bg" src="https://www.figma.com/api/mcp/asset/361da54a-df11-425a-95b6-b79a7522ca4d" alt="">
+
+    <div class="phone-panel">
+      <img class="phone-img" src="assets/images/capa-iphone-app.png" alt="iPhone com o logótipo PoliTrack">
+    </div>
+
+    <img class="fbaup" src="assets/images/uporto-logo.png" alt="Universidade do Porto — Faculdade de Belas Artes">
+
+    <div class="capa-left">
+      <div class="capa-top">
+        <div class="logo-group">
+          <div class="logo-lockup">
+            <img class="logo-full" src="assets/images/logo-politrack.png" alt="PoliTrack">
+          </div>
+          <p class="tagline">Aplicação para transparência política</p>
+        </div>
+
+        <div class="c-stripe">
+          <img src="assets/images/barra-1.png" alt="">
+        </div>
+
+        <div class="meta">
+          <span class="sep-wh"></span>
+          <div class="meta-row"><span class="lbl">Curso</span><span class="val">Licenciatura em Design de Comunicação</span></div>
+          <span class="sep-wh"></span>
+          <div class="meta-row"><span class="lbl">Unidade Curricular</span><span class="val">Projeto Final</span></div>
+          <span class="sep-wh"></span>
+          <div class="meta-row"><span class="lbl">Área do projeto</span><span class="val">Meios Computacionais</span></div>
+          <span class="sep-wh"></span>
+        </div>
+      </div>
+
+      <div class="capa-bottom">
+        <span class="sep-wh"></span>
+        <div class="meta-row"><span class="lbl">Carolina Santos</span><span class="val">up202205653</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-hint"><span>explorar</span><div class="scroll-arrow"></div></div>
+  </section>
+
+  <!-- ══ S2 — ENQUADRAMENTO ════════════════════════════════
+       Frame Figma: 526-12985 -->
+  <section id="s2">
+    <div class="s2-inner">
+      <p class="s2-title">Uma aplicação para <span class="accent">transparência parlamentar.</span></p>
+
+      <div class="s2-mid">
+        <img class="s2-hero-img" src="assets/images/enquadramento-hero.png" alt="Ecrãs da aplicação PoliTrack — feed, filtros e página de partido">
+        <p class="s2-note">Investigação, redesign e prototipagem de uma interface para acompanhar informação parlamentar portuguesa.</p>
+      </div>
+
+      <div class="footer-bar">
+        <span class="sep-wh"></span>
+        <div class="footer-row">
+          <span class="footer-label">Enquadramento</span>
+          <div class="footer-stripe">
+            <img src="assets/images/barra-2.png" alt="">
+          </div>
+          <span class="footer-num">03</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ S3 — MANIFESTO ("O que é") ════════════════════════
+       Frame Figma: 526-13138 -->
+  <section id="s3">
+    <div class="mf-inner">
+      <div class="mf-top">
+        <div class="mf-line-wrap">
+          <div class="mf-line">
+            <span class="mf-num">01</span>
+            <p class="mf-sentence"><span class="accent">Acompanha</span> o que se decide.</p>
+          </div>
+          <span class="sep-pr"></span>
+          <div class="mf-line">
+            <span class="mf-num">02</span>
+            <p class="mf-sentence"><span class="accent">Filtra</span> pelo que te importa.</p>
+          </div>
+          <span class="sep-pr"></span>
+          <div class="mf-line">
+            <span class="mf-num">03</span>
+            <p class="mf-sentence"><span class="accent">Sabe</span> como os partidos votaram.</p>
+          </div>
+          <span class="sep-pr"></span>
+        </div>
+
+        <p class="mf-note">
+          <b>PoliTrack</b>&nbsp;agrega dados reais da Assembleia da República
+          <span class="link">&nbsp;[www.parlamento.pt]&nbsp;</span>
+          em tempo real, com motor de busca semântico e classificação de iniciativas por tema.
+        </p>
+      </div>
+
+      <div class="mf-footer">
+        <span class="sep-dk-line"></span>
+        <div class="mf-footer-row">
+          <span class="mf-footer-label">Identidade</span>
+          <div class="mf-stripe">
+            <img src="assets/images/barra-3.png" alt="">
+          </div>
+          <span class="mf-page-num">05</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ S5 — DEMONSTRAÇÃO (VÍDEOS) ════════════════════════
+       Sidebar fiel ao frame Figma 528-13392.
+       O CONTEÚDO da lista de vídeos está em js/data.js — edita
+       lá os títulos/descrições; aqui só está a estrutura visual. -->
+  <section id="s5">
+    <nav class="vid-sidebar" id="vid-sidebar">
+      <button class="vid-toggle" id="vid-toggle" type="button" aria-label="Ocultar lista de vídeos" aria-expanded="true" aria-controls="vid-sidebar-content">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="vid-sidebar-content" id="vid-sidebar-content">
+        <p class="vid-title-main">Demonstração</p>
+
+        <p class="vid-cat">Descoberta</p>
+        <button class="vid-item-row active" onclick="selectVid(0)" id="vi-0">
+          <p class="vid-item-title">Home Page</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-0"></div></div>
+        </button>
+        <button class="vid-item-row" onclick="selectVid(1)" id="vi-1">
+          <p class="vid-item-title">Temas</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-1"></div></div>
+        </button>
+
+        <p class="vid-cat">Pesquisa</p>
+        <button class="vid-item-row" onclick="selectVid(2)" id="vi-2">
+          <p class="vid-item-title">Busca semântica</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-2"></div></div>
+        </button>
+        <button class="vid-item-row" onclick="selectVid(3)" id="vi-3">
+          <p class="vid-item-title">Filtros subtrativos</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-3"></div></div>
+        </button>
+
+        <p class="vid-cat">Partidos</p>
+        <button class="vid-item-row" onclick="selectVid(4)" id="vi-4">
+          <p class="vid-item-title">Por grupo parlamentar</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-4"></div></div>
+        </button>
+        <button class="vid-item-row" onclick="selectVid(5)" id="vi-5">
+          <p class="vid-item-title">Por página de partido</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-5"></div></div>
+        </button>
+
+        <p class="vid-cat">Detalhe</p>
+        <button class="vid-item-row" onclick="selectVid(6)" id="vi-6">
+          <p class="vid-item-title">Iniciativa</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-6"></div></div>
+        </button>
+
+        <p class="vid-cat">Pessoal</p>
+        <button class="vid-item-row" onclick="selectVid(7)" id="vi-7">
+          <p class="vid-item-title">Perfil</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-7"></div></div>
+        </button>
+
+        <p class="vid-cat">Sistema de Design</p>
+        <button class="vid-item-row" onclick="selectVid(8)" id="vi-8">
+          <p class="vid-item-title">Identidade visual</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-8"></div></div>
+        </button>
+        <button class="vid-item-row" onclick="selectVid(9)" id="vi-9">
+          <p class="vid-item-title">Ícones &amp; Proponentes</p>
+          <div class="vid-pb"><div class="vid-pf" id="vp-9"></div></div>
+        </button>
+      </div>
+    </nav>
+
+    <div class="vid-main" id="vid-main">
+      <div class="vid-placeholder" id="vid-placeholder">
+        <div class="ring"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        <p style="font-size:16px;font-weight:800;color:white;margin-bottom:4px;font-family:var(--f-label)">Vídeos a adicionar</p>
+        <p style="font-family:var(--f-label);font-size:11px;color:var(--muted)">Edita js/data.js e substitui os VIDEO_ID</p>
+      </div>
+      <div id="vid-frame-wrap" style="position:absolute;inset:0;display:none"></div>
+
+      <div class="vid-context">
+        <div class="vid-ctx-left">
+          <span class="vid-ctx-cat"   id="vid-now-cat">Descoberta</span>
+          <span class="vid-ctx-title" id="vid-now-title">Home Page</span>
+          <span class="vid-ctx-desc"  id="vid-now-desc">Feed principal de iniciativas legislativas recentes — ponto de entrada da app.</span>
+        </div>
+        <div class="vid-autonext" id="vid-autonext">
+          <div class="autonext-ring"></div>
+          <span>Próximo em <span class="autonext-time"><span id="vid-countdown">15</span>s</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ S6 — DOWNLOAD ═════════════════════════════════════
+       Frame Figma: 528-13355 -->
+  <section id="s6">
+    <div class="dl-inner">
+      <div class="dl-top">
+        <p class="dl-title">Faz download.&#10;É gratuito.</p>
+        <p class="dl-sub">Acompanha e testa o projeto!</p>
+
+        <div class="dl-qr-row">
+          <div class="dl-qr-col">
+            <div class="dl-qr"><img src="assets/images/qr-google-play.png" alt="Código QR para descarregar o PoliTrack na Google Play"></div>
+            <div class="dl-store-btn"><img src="assets/images/badge-google-play.png" alt="Disponível na Google Play"></div>
+          </div>
+          <div class="dl-qr-col">
+            <div class="dl-qr"><img src="assets/images/qr-app-store.png" alt="Código QR para descarregar o PoliTrack na App Store"></div>
+            <div class="dl-store-btn"><img src="assets/images/badge-app-store.png" alt="Disponível na App Store"></div>
+          </div>
+        </div>
+
+        <div class="dl-extra">
+          <div class="dl-extra-row">
+            <div class="dl-extra-item">
+              <span class="dl-extra-label">Plataforma</span>
+              <span class="dl-extra-value">iOS · Android</span>
+            </div>
+            <div class="dl-extra-item">
+              <span class="dl-extra-label">Preço</span>
+              <span class="dl-extra-value">Gratuito, sem anúncios</span>
+            </div>
+            <div class="dl-extra-item">
+              <span class="dl-extra-label">Dados</span>
+              <span class="dl-extra-value">Assembleia da República · parlamento.pt</span>
+            </div>
+            <div class="dl-extra-item">
+              <span class="dl-extra-label">Instagram</span>
+              <span class="dl-extra-value">@politrackpt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <span class="sep-wh"></span>
+        <div class="footer-row">
+          <span class="footer-label">Investigação</span>
+          <div class="footer-stripe">
+            <img src="assets/images/barra-5.png" alt="">
+          </div>
+          <span class="footer-num">07</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ S7 — CRÉDITOS ═════════════════════════════════════
+       Frame Figma: 520-11878 -->
+  <section id="s7">
+    <div class="cr-inner">
+      <div class="cr-top">
+        <p class="cr-title">Obrigada!</p>
+
+        <div class="cr-mid">
+          <div class="cr-table">
+            <span class="cr-sep"></span>
+            <div class="cr-row"><span class="lbl">Carolina Santos</span><span class="val">UX/UI Designer &amp; Visual Identity</span></div>
+            <span class="cr-sep"></span>
+            <div class="cr-row"><span class="lbl">João Lourenço</span><span class="val">Data &amp; Infrastructure Engineer</span></div>
+            <span class="cr-sep"></span>
+            <div class="cr-row"><span class="lbl">Tiago Cruz</span><span class="val">Backend Software Engineer</span></div>
+            <span class="cr-sep"></span>
+            <div class="cr-row"><span class="lbl">Isabel Moutinho</span><span class="val">Backend Software Engineer</span></div>
+            <span class="cr-sep"></span>
+            <div class="cr-row"><span class="lbl">Tomás Xavier</span><span class="val">Frontend Software Developer</span></div>
+            <span class="cr-sep"></span>
+          </div>
+          <div class="cr-qr"><img src="assets/images/qr-google-play.png" alt="Código QR PoliTrack"></div>
+        </div>
+      </div>
+
+      <div class="cr-bottom">
+        <div class="cr-logo-wrap">
+          <div class="cr-logo-lockup">
+            <img class="cr-logo-full" src="assets/images/logo-politrack.png" alt="PoliTrack">
+          </div>
+        </div>
+        <div class="cr-note-wrap">
+          <p class="cr-note">
+            Obrigada a quem ajudou, testou e instalou.<br>
+            Juntem-se, está disponível e é gratuito!<br>
+            Sigam-nos no Instagram: <span class="acc">@politrackpt</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="cr-footer">
+        <span class="cr-sep"></span>
+        <div style="display:flex;align-items:center;gap:calc(20*var(--u))">
+          <span class="cr-smiley">:)</span>
+          <div class="cr-stripe">
+            <img src="assets/images/barra-6.png" alt="">
+          </div>
+          <span class="cr-page-num">17</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /root -->
+
+<!-- ════════════════════════════════════════════════════════
+     JAVASCRIPT — carregado pela ordem: dados → módulos → app
+     data.js tem todo o conteúdo editável dos vídeos.
+═══════════════════════════════════════════════════════════ -->
+<script src="js/data.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/videos.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

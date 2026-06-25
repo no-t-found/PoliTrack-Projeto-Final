@@ -1,0 +1,69 @@
+/* ════════════════════════════════════════════════════════════
+   TOKENS — variáveis de design (cores, fontes, escala)
+   Edita aqui para mudar o visual em todo o site de uma vez.
+═══════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'PP Neue Machina';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/PPNeueMachina-InktrapRegular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PP Neue Machina';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/fonts/PPNeueMachina-InktrapUltrabold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk TX Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/NHaasGroteskTXPro-Rg.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Power Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/POWERGROTESK-REGULAR.OTF') format('opentype');
+}
+
+:root {
+  /* ── Cores ── */
+  --bg:        #113742;  /* fundo principal — Sonae teal escuro */
+  --bg-lt:     #edf8f9;  /* fundo claro — secção manifesto */
+  --bg-dl:     #687684;  /* fundo cinza — secção download */
+  --accent:    #23DAFF;  /* ciano de destaque */
+  --primary:   #3da4ad;  /* teal médio — usado no manifesto */
+  --white:     #ffffff;
+
+  /* ── Opacidades reutilizáveis ── */
+  --sep:       rgba(255, 255, 255, 0.25);
+  --muted:     rgba(255, 255, 255, 0.55);
+
+  /* ── Tipografia ── */
+  --f-display: 'Neue Haas Grotesk TX Pro', 'Helvetica Neue', Arial, sans-serif;
+  --f-label:   'PP Neue Machina', monospace;
+  --f-power:   'Power Grotesk', sans-serif;
+
+  /* ── Escala proporcional ──
+     1 unidade = 1px no frame Figma de referência (1920px largura).
+     Todas as medidas calc(N * var(--u)) escalam com a janela
+     mantendo as proporções exatas do design original.
+
+     clamp() trava o crescimento em ecrãs muito grandes (4K, monitores
+     de exposição) e o encolhimento em ecrãs muito pequenos — sem isto,
+     0.05208vw sozinho cresce/encolhe sem limite. */
+  --u: clamp(0.04vw, 0.05208vw, 0.075vw);
+}
+
+/* Em mobile a unidade de escala já não faz sentido (o layout muda de
+   estrutura, não só de tamanho) — ver media queries em cada secção. */
+

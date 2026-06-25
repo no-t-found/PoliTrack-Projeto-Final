@@ -1,0 +1,381 @@
+/* ════════════════════════════════════════════════════════════
+   SECÇÃO 4 — DEMONSTRAÇÃO (VÍDEOS)
+   Sidebar de navegação fiel ao frame Figma 528-13392
+   + área principal com player e overlay de contexto.
+═══════════════════════════════════════════════════════════════ */
+
+#s5 {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+/* ── Sidebar ──
+   Pode ser ocultada com o botão .vid-toggle — ver lógica em
+   js/videos.js. Quando colapsada, fica uma faixa estreita
+   sempre visível e clicável para o utilizador saber que pode
+   voltar a abri-la (nunca desaparece por completo). */
+.vid-sidebar {
+  width: calc(300 * var(--u));
+  flex-shrink: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: calc(48 * var(--u)) calc(28 * var(--u)) calc(40 * var(--u)) calc(28 * var(--u));
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  transition: width 0.3s ease, padding 0.3s ease;
+  position: relative;
+}
+.vid-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Estado colapsado: sidebar encolhe para uma faixa fina.
+   O conteúdo de texto esconde-se mas o botão de expandir
+   fica sempre visível e centrado, com seta a indicar a ação. */
+.vid-sidebar.collapsed {
+  width: 44px;
+  padding: calc(48 * var(--u)) 0 calc(40 * var(--u)) 0;
+  overflow: hidden;
+}
+.vid-sidebar.collapsed .vid-sidebar-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vid-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.15s ease;
+}
+
+/* Botão de ocultar/mostrar — sempre visível, com seta clara */
+.vid-toggle {
+  position: absolute;
+  top: calc(48 * var(--u));
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, right 0.3s ease;
+  z-index: 5;
+}
+.vid-toggle:hover {
+  background: rgba(35, 218, 255, 0.12);
+  border-color: rgba(35, 218, 255, 0.4);
+  color: var(--accent);
+}
+.vid-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.vid-sidebar.collapsed .vid-toggle {
+  right: 8px;
+  position: static;
+  margin: 0 auto;
+}
+.vid-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+.vid-sidebar.collapsed .vid-toggle svg {
+  transform: rotate(180deg);
+}
+
+/* Etiqueta "Demonstração" — eyebrow com peso e cor próprios
+   para não se perder na página, mas sem competir com o título
+   do vídeo no overlay principal. */
+.vid-title-main {
+  font-family: var(--f-label);
+  font-size: calc(13 * var(--u));
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: calc(22 * var(--u));
+  padding-right: calc(24 * var(--u));
+  opacity: 0.9;
+}
+
+.vid-cat {
+  font-family: var(--f-display);
+  font-size: calc(15 * var(--u));
+  font-weight: 700;
+  line-height: calc(20 * var(--u));
+  letter-spacing: calc(-0.3 * var(--u));
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: calc(22 * var(--u));
+  margin-bottom: calc(12 * var(--u));
+  padding-right: calc(24 * var(--u));
+}
+
+/* Item de vídeo na sidebar.
+   Sem traços verticais "|" antes do texto — ruído visual
+   inútil. A única indicação de seleção é a linha horizontal
+   fina por baixo do item ativo. */
+.vid-item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: calc(9 * var(--u)) calc(24 * var(--u)) calc(11 * var(--u)) 0;
+  margin-bottom: 2px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 1.5px solid transparent;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+.vid-item-row.active {
+  border-bottom-color: var(--accent);
+}
+.vid-item-title {
+  font-family: var(--f-label);
+  font-size: calc(19 * var(--u));
+  font-weight: 400;
+  letter-spacing: calc(-0.04 * var(--u));
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+.vid-item-row:hover .vid-item-title {
+  color: rgba(255, 255, 255, 0.8);
+}
+.vid-item-row.active .vid-item-title {
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Barra de progresso (autoplay) sob cada título */
+.vid-pb {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 1px;
+  overflow: hidden;
+  width: 100%;
+}
+.vid-pf {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  border-radius: 1px;
+}
+
+/* ── Área principal do vídeo ── */
+.vid-main {
+  flex: 1;
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.vid-main iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.vid-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 40px;
+}
+.vid-placeholder .ring {
+  width: 72px;
+  height: 72px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay de contexto (categoria, título, descrição, autoplay) */
+.vid-context {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: linear-gradient(to top, rgba(10, 30, 36, 0.95) 0%, rgba(10, 30, 36, 0.65) 55%, transparent 100%);
+  padding: max(16px, calc(32 * var(--u))) max(20px, calc(40 * var(--u))) max(20px, calc(28 * var(--u)));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  pointer-events: none;
+}
+.vid-ctx-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* Nota: sem text-transform uppercase — nunca usar tudo em maiúsculas */
+.vid-ctx-cat {
+  font-family: var(--f-label);
+  font-size: max(10px, calc(13 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.vid-ctx-title {
+  font-family: var(--f-display);
+  font-size: max(20px, calc(30 * var(--u)));
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.vid-ctx-desc {
+  font-family: var(--f-display);
+  font-size: max(12px, calc(15 * var(--u)));
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.45;
+  max-width: calc(600 * var(--u));
+  margin-top: 4px;
+}
+.vid-autonext {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-family: var(--f-label);
+  font-size: max(9px, calc(11 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  background: rgba(17, 55, 66, 0.85);
+  padding: 8px 14px;
+  border-radius: 24px;
+  border: 1px solid rgba(35, 218, 255, 0.3);
+  pointer-events: all;
+  transition: opacity 0.2s;
+}
+/* "Próximo em" e o número+s ficam juntos sem espaço extra entre
+   o número e a unidade — controlado via JS (countdown + "s" no
+   mesmo nó de texto, sem espaço). */
+.vid-autonext .autonext-time {
+  white-space: nowrap;
+}
+.autonext-ring {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  position: relative;
+  flex-shrink: 0;
+}
+.autonext-ring::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent);
+  animation: spin 3s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .autonext-ring::after {
+    animation: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVO — tablet e mobile
+   A sidebar lateral não cabe ao lado do vídeo em telas estreitas
+   — passa para cima como uma faixa horizontal de categorias,
+   e o vídeo ocupa o resto do ecrã por baixo. O botão de ocultar
+   fica desativado visualmente em mobile (não faz sentido).
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #s5 {
+    flex-direction: column;
+  }
+  .vid-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 40vh;
+    padding: 20px 16px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .vid-sidebar.collapsed {
+    width: 100%;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .vid-toggle {
+    display: none;
+  }
+  .vid-title-main {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .vid-cat {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+  .vid-item-title {
+    font-size: 14px;
+  }
+  .vid-main {
+    flex: 1;
+    min-height: 240px;
+  }
+  .vid-ctx-title {
+    font-size: 18px;
+  }
+  .vid-ctx-desc {
+    font-size: 12px;
+    max-width: 100%;
+  }
+  .vid-context {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .vid-autonext {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .vid-sidebar {
+    max-height: 35vh;
+  }
+  .vid-ctx-title {
+    font-size: 16px;
+  }
+  .vid-ctx-desc {
+    display: none; /* poupa espaço — descrição completa fica só em ecrãs maiores */
+  }
+}

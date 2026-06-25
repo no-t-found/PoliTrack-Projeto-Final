@@ -1,0 +1,77 @@
+/* ════════════════════════════════════════════════════════════
+   BASE — reset e estilos globais
+═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--f-display);
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* iOS Safari precisa de altura real do viewport, não 100vh
+   (que inclui a barra de endereço) — usa dvh quando suportado. */
+@supports (height: 100dvh) {
+  body {
+    height: 100dvh;
+  }
+}
+
+/* ── Scroll container principal ──
+   Todas as secções vivem aqui dentro e fazem scroll-snap. */
+#root {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+@supports (height: 100dvh) {
+  #root {
+    height: 100dvh;
+  }
+}
+#root::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Secção base ──
+   Cada <section> ocupa um ecrã inteiro. Cor de fundo
+   e padding específicos ficam definidos no ficheiro
+   da secção correspondente (04-section-*.css). */
+section {
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+@supports (height: 100dvh) {
+  section {
+    height: 100dvh;
+  }
+}
+
+/* ── Breakpoints partilhados ──
+   tablet:  ≤ 1024px  (iPad, ecrãs pequenos de laptop)
+   mobile:  ≤ 640px   (telemóveis)
+   A maioria dos ajustes específicos vive nos ficheiros de
+   cada secção; aqui ficam só os globais. */
+@media (max-width: 640px) {
+  section {
+    overflow-y: auto;
+  }
+}

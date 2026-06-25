@@ -1,0 +1,293 @@
+/* ════════════════════════════════════════════════════════════
+   COMPONENTES PARTILHADOS
+   Elementos reutilizados em várias secções. Se quiseres mudar
+   o estilo de algo que aparece em mais do que um sítio
+   (separadores, footer, etiquetas), é aqui que editas.
+═══════════════════════════════════════════════════════════════ */
+
+/* ── UI persistente (fixa em toda a página) ── */
+#home-btn {
+  position: fixed;
+  top: 24px;
+  right: 32px;
+  z-index: 300;
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--f-label);
+  font-size: max(10px, calc(12 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding: 9px 20px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.3s;
+  opacity: 0;
+  pointer-events: none;
+}
+#home-btn.vis {
+  opacity: 1;
+  pointer-events: all;
+}
+#home-btn:hover {
+  background: rgba(35, 218, 255, 0.12);
+}
+#home-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#nav-dots {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sep);
+  cursor: pointer;
+  transition: background 0.25s, transform 0.25s;
+}
+/* Sobre fundo claro (S3 — Manifesto), o branco semi-transparente
+   fica invisível. Esta variante escurece os dots para manter
+   contraste suficiente. */
+#nav-dots.on-light .dot {
+  background: rgba(17, 55, 66, 0.3);
+}
+#nav-dots.on-light .dot.on {
+  background: var(--primary);
+}
+.dot.on {
+  background: var(--accent);
+  transform: scale(1.5);
+}
+
+#kiosk-pip {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-label);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+#kiosk-pip.vis {
+  opacity: 0.55;
+}
+#kiosk-pip::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: block;
+  animation: blink 1.4s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ── Separadores ──
+   .sep-wh  = linha branca (usada em fundos escuros)
+   .sep-pr  = linha cor primária (usada em fundos claros) */
+.sep-wh {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: calc(0.816 * var(--u)) solid white;
+}
+.sep-pr {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: calc(0.816 * var(--u)) solid var(--primary);
+}
+
+/* ── Footer bar ──
+   Usado em secções escuras: "Etiqueta ——————— 03" */
+.footer-bar {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24.471 * var(--u));
+  width: 100%;
+}
+.footer-row {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--u));
+}
+.footer-label {
+  font-family: var(--f-label);
+  font-size: calc(29.19 * var(--u));
+  font-weight: 400;
+  line-height: calc(29.186 * var(--u));
+  letter-spacing: calc(-0.5838 * var(--u));
+  color: var(--white);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.footer-stripe {
+  flex: 1;
+  min-width: 0;
+  height: calc(21 * var(--u));
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.footer-stripe img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.footer-num {
+  font-family: var(--f-label);
+  font-size: calc(34 * var(--u));
+  font-weight: 400;
+  color: var(--white);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Linha de meta-dados (label : valor) ──
+   Usado na capa e nos créditos. */
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: calc(22.84 * var(--u));
+  line-height: calc(22.84 * var(--u));
+  color: #fff;
+  letter-spacing: calc(-0.4568 * var(--u));
+  white-space: nowrap;
+}
+.meta-row .lbl {
+  font-family: var(--f-label);
+  font-weight: 800;
+  font-feature-settings: 'dlig' 1;
+}
+.meta-row .val {
+  font-family: var(--f-label);
+  font-weight: 400;
+}
+
+/* ── Número de página solto (não no footer-bar) ── */
+.page-num {
+  font-family: var(--f-label);
+  font-size: max(18px, calc(28 * var(--u)));
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  opacity: 0.3;
+  line-height: 1;
+}
+
+/* ── Eyebrow (etiqueta pequena maiúscula acima de títulos) ── */
+.eyebrow {
+  font-family: var(--f-label);
+  font-size: max(9px, calc(11 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+}
+
+/* ── Indicador de scroll (capa) ── */
+.scroll-hint {
+  position: absolute;
+  bottom: calc(32 * var(--u));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.4;
+}
+.scroll-hint span {
+  font-family: var(--f-label);
+  font-size: max(9px, calc(11 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #fff;
+}
+.scroll-arrow {
+  width: max(16px, calc(22 * var(--u)));
+  height: max(16px, calc(22 * var(--u)));
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+  animation: bounce 1.6s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50%      { transform: rotate(45deg) translateY(5px); }
+}
+
+/* ── Logo lockup (ícone + wordmark sobrepostos) ──
+   Usado na capa e nos créditos, com tamanhos diferentes
+   definidos via classes modificadoras em cada secção. */
+.logo-lockup {
+  position: relative;
+  width: 100%;
+}
+/* Posicionamento absoluto só para o sistema antigo (ícone +
+   wordmark sobrepostos em duas imagens). O logo de ficheiro
+   único (.logo-full / .cr-logo-full) flui normalmente. */
+.logo-lockup img:not(.logo-full):not(.cr-logo-full) {
+  position: absolute;
+  top: 0;
+  object-fit: contain;
+  object-position: top left;
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVO — componentes partilhados
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #home-btn {
+    top: 16px;
+    right: 16px;
+    font-size: 10px;
+    padding: 7px 14px;
+  }
+  #nav-dots {
+    right: 14px;
+    gap: 7px;
+  }
+  .dot {
+    width: 5px;
+    height: 5px;
+  }
+  #kiosk-pip {
+    bottom: 12px;
+    font-size: 9px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .page-num {
+    font-size: 18px;
+  }
+}

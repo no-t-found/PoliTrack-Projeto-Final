@@ -1,0 +1,167 @@
+/* ════════════════════════════════════════════════════════════
+   SECÇÃO 6 — DOWNLOAD
+   Frame Figma: node 528-13355
+   Fundo cinza — única secção com esta variante.
+═══════════════════════════════════════════════════════════════ */
+
+#s6 {
+  background: var(--bg-dl);
+  display: flex;
+  flex-direction: column;
+  padding: calc(60 * var(--u)) calc(75 * var(--u)) calc(50 * var(--u));
+}
+
+.dl-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dl-top {
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--u));
+}
+
+.dl-title {
+  font-family: var(--f-display);
+  font-size: calc(125 * var(--u));
+  font-weight: 400;
+  line-height: calc(127 * var(--u));
+  letter-spacing: calc(-0.3 * var(--u));
+  color: #fff;
+  white-space: pre-line;
+}
+
+.dl-sub {
+  font-family: var(--f-display);
+  font-size: calc(24 * var(--u));
+  font-weight: 400;
+  line-height: calc(32 * var(--u));
+  letter-spacing: calc(-0.48 * var(--u));
+  color: #fff;
+  white-space: nowrap;
+}
+
+.dl-qr-row {
+  display: flex;
+  gap: calc(30 * var(--u));
+  align-items: flex-start;
+}
+.dl-qr-col {
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--u));
+  align-items: center;
+}
+.dl-qr {
+  width: calc(270 * var(--u));
+  height: calc(270 * var(--u));
+  flex-shrink: 0;
+}
+.dl-qr img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(12 * var(--u));
+}
+.dl-store-btn {
+  height: calc(73.956 * var(--u));
+  width: calc(256 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dl-store-btn img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Bloco de informação extra (plataforma / instagram / fonte de dados) */
+.dl-extra {
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--u));
+  margin-top: calc(10 * var(--u));
+  max-width: calc(700 * var(--u));
+}
+.dl-extra-row {
+  display: flex;
+  gap: calc(32 * var(--u));
+  flex-wrap: wrap;
+}
+.dl-extra-item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * var(--u));
+}
+.dl-extra-label {
+  font-family: var(--f-label);
+  font-size: calc(11 * var(--u));
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  opacity: 0.8;
+}
+.dl-extra-value {
+  font-family: var(--f-display);
+  font-size: calc(18 * var(--u));
+  color: #fff;
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVO — tablet e mobile
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #s6 {
+    padding: 32px 24px 24px;
+    overflow-y: auto;
+  }
+  .dl-title {
+    font-size: 40px;
+    line-height: 44px;
+  }
+  .dl-sub {
+    font-size: 15px;
+    line-height: 20px;
+    white-space: normal;
+  }
+  .dl-qr-row {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .dl-qr {
+    width: 130px;
+    height: 130px;
+  }
+  .dl-store-btn {
+    height: 40px;
+    width: 150px;
+  }
+  .dl-extra-row {
+    gap: 20px;
+  }
+  .dl-extra-label {
+    font-size: 11px;
+  }
+  .dl-extra-value {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dl-title {
+    font-size: 30px;
+    line-height: 34px;
+  }
+  .dl-qr-row {
+    justify-content: center;
+    width: 100%;
+  }
+  .dl-extra-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

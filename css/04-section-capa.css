@@ -1,0 +1,236 @@
+/* ════════════════════════════════════════════════════════════
+   SECÇÃO 1 — CAPA
+   Frame Figma: node 520-11820
+═══════════════════════════════════════════════════════════════ */
+
+#s1 {
+  display: flex;
+  flex-direction: column;
+  padding: calc(90 * var(--u)) calc(60 * var(--u)) calc(80 * var(--u)) calc(91 * var(--u));
+  gap: calc(271 * var(--u));
+}
+
+#s1 .bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* iPhone mockup, lado direito — alinhado verticalmente com o
+   topo do logo (mesmo valor que o padding-top da secção, menos
+   o padding interno do próprio painel) e estendido para ocupar
+   mais a margem direita disponível. */
+.phone-panel {
+  position: absolute;
+  left: calc(1022 * var(--u));
+  right: calc(20 * var(--u));
+  top: calc(90 * var(--u) - 42 * var(--u));
+  padding: calc(42 * var(--u));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.phone-img {
+  width: calc(698 * var(--u));
+  max-width: 100%;
+  height: calc(1417 * var(--u));
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* Coluna esquerda: logo, tagline, meta-dados */
+.capa-left {
+  position: relative;
+  width: calc(939 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(230 * var(--u));
+}
+.capa-top {
+  display: flex;
+  flex-direction: column;
+  gap: calc(30 * var(--u));
+}
+.logo-group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24.711 * var(--u));
+}
+
+/* Logo lockup específico da capa — ficheiro único (ícone + wordmark
+   já combinados), proporção real 4.49:1 */
+#s1 .logo-lockup {
+  height: calc(208.763 * var(--u));
+  display: flex;
+  align-items: flex-start;
+}
+.logo-full {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left top;
+  display: block;
+}
+
+/* Tagline — fonte Power Grotesk (pedido específico) */
+.tagline {
+  font-family: var(--f-power);
+  font-size: calc(55.599 * var(--u));
+  font-weight: 400;
+  line-height: calc(59.305 * var(--u));
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Barra de destaque por baixo da tagline */
+.c-stripe {
+  position: relative;
+  height: calc(16.314 * var(--u));
+  width: 100%;
+  overflow: hidden;
+}
+.c-stripe img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.c-stripe img:last-child {
+  mix-blend-mode: overlay;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24.471 * var(--u));
+}
+.capa-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: calc(26.825 * var(--u));
+  height: calc(50 * var(--u));
+  justify-content: center;
+}
+
+/* Logo UPorto / FBAUP — posicionado para ficar acima da linha
+   separadora final (antes de "Carolina Santos"), não sobre ou
+   depois dela. */
+.fbaup {
+  position: absolute;
+  left: calc(91 * var(--u));
+  top: calc(790 * var(--u));
+  width: calc(193 * var(--u));
+  height: calc(86 * var(--u));
+  object-fit: contain;
+  object-position: bottom left;
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVO — tablet e mobile
+   Abaixo de 1024px o layout de duas colunas (texto + iPhone)
+   deixa de caber lado a lado. Em vez de escalar tudo para
+   baixo até ficar ilegível, a estrutura passa a empilhada:
+   logo/tagline no topo, telefone como elemento decorativo
+   menor, meta-dados em baixo.
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #s1 {
+    padding: 32px 24px 24px;
+    gap: 24px;
+    overflow-y: auto;
+  }
+
+  .phone-panel {
+    position: relative;
+    left: auto;
+    top: auto;
+    padding: 0;
+    justify-content: center;
+    width: 100%;
+    order: 2;
+  }
+  .phone-img {
+    position: relative;
+    width: 140px;
+    height: 284px;
+  }
+
+  .capa-left {
+    position: relative;
+    width: 100%;
+    gap: 28px;
+    order: 1;
+  }
+  .capa-top {
+    gap: 16px;
+  }
+
+  #s1 .logo-lockup {
+    height: 60px;
+  }
+
+  .tagline {
+    font-size: 22px;
+    line-height: 26px;
+    white-space: normal;
+  }
+
+  .c-stripe {
+    height: 4px;
+  }
+
+  .meta {
+    gap: 10px;
+  }
+  .meta-row {
+    font-size: 13px;
+    line-height: 16px;
+    white-space: normal;
+    gap: 12px;
+  }
+  .meta-row .val {
+    text-align: right;
+  }
+
+  .capa-bottom {
+    height: auto;
+    gap: 10px;
+  }
+
+  .fbaup {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 90px;
+    height: 40px;
+    order: 3;
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .phone-img {
+    width: 110px;
+    height: 223px;
+  }
+  .tagline {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .meta-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-row .val {
+    text-align: left;
+  }
+}

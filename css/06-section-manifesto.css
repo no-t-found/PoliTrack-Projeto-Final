@@ -1,0 +1,191 @@
+/* ════════════════════════════════════════════════════════════
+   SECÇÃO 3 — MANIFESTO ("O que é")
+   Frame Figma: node 526-13138
+   Fundo claro — única secção com esta variante.
+═══════════════════════════════════════════════════════════════ */
+
+#s3 {
+  background: var(--bg-lt);
+  display: flex;
+  flex-direction: column;
+  padding: calc(60 * var(--u)) calc(75 * var(--u)) calc(55 * var(--u));
+}
+
+.mf-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mf-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: calc(1778 * var(--u));
+  flex: 1;
+  justify-content: flex-start;
+}
+
+/* As 3 frases ficam mais compactas — espaçamento reduzido em
+   ~50% em relação à distribuição expandida anterior, mais
+   próximo da densidade do frame Figma original. */
+.mf-line-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+  flex: 0 1 auto;
+}
+.mf-line {
+  display: flex;
+  gap: calc(30 * var(--u));
+  align-items: flex-end;
+}
+.mf-num {
+  font-family: var(--f-label);
+  font-size: calc(34 * var(--u));
+  font-weight: 400;
+  line-height: calc(34 * var(--u));
+  color: var(--primary);
+  min-width: calc(49 * var(--u));
+  text-align: right;
+  flex-shrink: 0;
+  padding-bottom: calc(5 * var(--u));
+}
+.mf-sentence {
+  font-family: var(--f-display);
+  font-size: calc(92 * var(--u));
+  font-weight: 400;
+  line-height: calc(95 * var(--u));
+  letter-spacing: calc(-0.3 * var(--u));
+  color: #113742;
+  width: calc(1554 * var(--u));
+}
+.mf-sentence .accent {
+  color: var(--primary);
+}
+
+.mf-note {
+  font-size: calc(23.993 * var(--u));
+  line-height: calc(31.569 * var(--u));
+  letter-spacing: calc(-0.4799 * var(--u));
+  color: #113742;
+  display: flex;
+  gap: 0.3em;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  width: calc(1778 * var(--u));
+  margin-top: calc(70 * var(--u));
+  margin-bottom: calc(30 * var(--u));
+}
+.mf-note b {
+  font-family: var(--f-label);
+  font-weight: 800;
+}
+.mf-note .link {
+  color: var(--primary);
+}
+
+/* Footer escuro sobre fundo claro — variante própria */
+.mf-footer {
+  display: flex;
+  flex-direction: column;
+  gap: calc(24.471 * var(--u));
+  width: calc(1778 * var(--u));
+}
+.sep-dk-line {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: calc(0.816 * var(--u)) solid #113742;
+}
+.mf-footer-row {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--u));
+}
+.mf-footer-label {
+  font-family: var(--f-label);
+  font-size: calc(29.19 * var(--u));
+  font-weight: 400;
+  line-height: calc(29.186 * var(--u));
+  letter-spacing: calc(-0.5838 * var(--u));
+  color: #113742;
+  white-space: nowrap;
+  opacity: 0.5;
+}
+.mf-stripe {
+  flex: 1;
+  min-width: 0;
+  height: calc(21 * var(--u));
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.mf-stripe img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mf-page-num {
+  font-family: var(--f-label);
+  font-size: calc(34 * var(--u));
+  font-weight: 400;
+  color: #113742;
+  mix-blend-mode: overlay;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVO — tablet e mobile
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #s3 {
+    padding: 32px 24px 24px;
+    overflow-y: auto;
+  }
+  .mf-top {
+    width: 100%;
+  }
+  .mf-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .mf-num {
+    text-align: left;
+    padding-bottom: 0;
+  }
+  .mf-sentence {
+    font-size: 30px;
+    line-height: 34px;
+    width: 100%;
+  }
+  .mf-line-wrap {
+    gap: 24px;
+  }
+  .sep-pr {
+    margin: 12px 0;
+  }
+  .mf-note {
+    font-size: 13px;
+    line-height: 18px;
+    white-space: normal;
+    width: 100%;
+    margin-top: 24px;
+  }
+  .mf-footer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .mf-sentence {
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
