@@ -62,10 +62,10 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.03);
-  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.04);
-  color: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(35, 218, 255, 0.35);
+  background: rgba(35, 218, 255, 0.08);
+  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.06);
+  color: var(--accent);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -74,8 +74,9 @@
   z-index: 5;
 }
 .vid-toggle:hover {
-  background: rgba(35, 218, 255, 0.14);
-  border-color: rgba(35, 218, 255, 0.5);
+  background: rgba(35, 218, 255, 0.22);
+  border-color: rgba(35, 218, 255, 0.7);
+  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.14);
   box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.10);
   color: var(--accent);
 }
@@ -191,31 +192,40 @@
   justify-content: center;
   min-width: 0;
 }
-.vid-main iframe {
+/* O elemento criado pela IFrame API é um <div> que o YouTube
+   substitui internamente por um iframe — por isso o seletor
+   aqui é o contentor (#vid-frame-wrap), não "iframe" direto. */
+#vid-frame-wrap {
+  position: absolute;
+  inset: 0;
+}
+#vid-frame-wrap iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: none;
   /* Vídeo é só decorativo (autoplay/loop, sem controlo manual).
-     pointer-events:none impede o YouTube de mostrar o overlay
-     de título/canal e os ícones de play/pausa ao detetar hover. */
+     pointer-events:none impede cliques que poderiam acionar a
+     UI nativa do YouTube. */
   pointer-events: none;
-  /* O player do YouTube pinta a sua própria UI nativa durante
-     a fração de segundo em que inicializa, antes do autoplay
-     arrancar — isto é interno ao iframe e pointer-events não
-     o evita. Um fade-in curto esconde esse instante inicial,
-     mostrando o iframe só quando o vídeo já está a correr. */
-  opacity: 0;
-  animation: vidFadeIn 0.25s ease-out 1.2s forwards;
 }
-@keyframes vidFadeIn {
-  to { opacity: 1; }
+/* Visibilidade controlada pelo JS (videos.js, evento
+   onStateChange da IFrame API) — só fica visível quando o
+   YouTube confirma que o vídeo está mesmo a reproduzir.
+   Isto elimina o "flash" de controlos nativos que aparece
+   enquanto o player inicializa, sem depender de um tempo fixo
+   que varia com a velocidade de rede de cada pessoa. */
+#vid-frame-wrap {
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+#vid-frame-wrap.is-playing {
+  opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
-  .vid-main iframe {
-    animation: none;
-    opacity: 1;
+  #vid-frame-wrap {
+    transition: none;
   }
 }
 .vid-placeholder {
@@ -256,7 +266,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-left: calc(48 * var(--u));
+  margin-left: calc(38 * var(--u));
 }
 /* Nota: sem text-transform uppercase — nunca usar tudo em maiúsculas */
 .vid-ctx-cat {

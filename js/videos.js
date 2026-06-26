@@ -3,6 +3,17 @@
    Lógica da galeria de vídeos: seleção, autoplay, countdown,
    e o botão de ocultar/mostrar a sidebar de navegação.
    Os dados (lista de vídeos) vivem em data.js.
+
+   Usa a YouTube IFrame Player API (em vez de só parâmetros de
+   URL) por duas razões:
+   1. Conseguimos detetar o momento exato em que o vídeo começa
+      a reproduzir de verdade (onStateChange) e só aí tornar o
+      iframe visível — elimina o "flash" de controlos nativos
+      do YouTube que aparece enquanto o player inicializa,
+      independentemente de quanto tempo isso demore na rede
+      da pessoa que está a ver o site.
+   2. setPlaybackQuality('hd1080') força 1080p de forma mais
+      fiável do que o parâmetro de URL "vq" sozinho.
 ═══════════════════════════════════════════════════════════════ */
 
 const VideoGallery = (() => {
@@ -11,22 +22,85 @@ const VideoGallery = (() => {
   let countdown = CONFIG.videoDurationSec;
   let isPaused = false;
   let sidebarCollapsed = false;
+  let apiReady = false;
+  let pendingVideoId = null;
+  let player = null;
 
   // referências DOM (preenchidas em init)
   let elFrameWrap, elPlaceholder, elTitle, elDesc, elCountdown, elAutonext;
-  let elSidebar, elToggle;
-
-  function buildEmbedUrl(videoId) {
-    return `https://www.youtube-nocookie.com/embed/${videoId}` +
-      `?autoplay=1&mute=1&loop=1&playlist=${videoId}` +
-      `&controls=0&rel=0&modestbranding=1&playsinline=1` +
-      `&iv_load_policy=3&disablekb=1&fs=0&vq=hd1080`;
-  }
+  let elSidebar, elToggle, elMainArea;
 
   // Um ID real do YouTube tem sempre 11 caracteres e nunca
   // começa por "VIDEO_ID" (usado como placeholder em data.js).
   function hasRealId(video) {
     return Boolean(video.id) && !video.id.startsWith('VIDEO_ID') && video.id.length === 11;
+  }
+
+  /** Carrega o script da IFrame API uma única vez. */
+  function loadYouTubeApi() {
+    if (window.YT && window.YT.Player) {
+      apiReady = true;
+      return;
+    }
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+    window.onYouTubeIframeAPIReady = () => {
+      apiReady = true;
+      if (pendingVideoId) {
+        createPlayer(pendingVideoId);
+        pendingVideoId = null;
+      }
+    };
+  }
+
+  function createPlayer(videoId) {
+    elFrameWrap.style.display = 'block';
+    elFrameWrap.innerHTML = '<div id="yt-player-target"></div>';
+    elFrameWrap.classList.remove('is-playing');
+
+    player = new YT.Player('yt-player-target', {
+      videoId,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        loop: 1,
+        playlist: videoId,
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1,
+        iv_load_policy: 3,
+        disablekb: 1,
+        fs: 0,
+        origin: window.location.origin,
+      },
+      events: {
+        onReady: (e) => {
+          // Força 1080p de forma explícita via API — mais
+          // fiável do que o parâmetro de URL "vq" isolado.
+          e.target.setPlaybackQuality('hd1080');
+          e.target.playVideo();
+        },
+        onStateChange: (e) => {
+          // Estado 1 = a reproduzir de verdade. Só agora o
+          // iframe se torna visível — sem flash de controlos.
+          if (e.data === YT.PlayerState.PLAYING) {
+            elPlaceholder.style.display = 'none';
+            elFrameWrap.classList.add('is-playing');
+            // reforça 1080p sempre que o estado muda para
+            // reproduzir, caso o YouTube tenha ajustado a
+            // qualidade automaticamente por largura de banda
+            e.target.setPlaybackQuality('hd1080');
+          }
+        },
+        onPlaybackQualityChange: (e) => {
+          if (e.data !== 'hd1080' && e.target.getAvailableQualityLevels().includes('hd1080')) {
+            e.target.setPlaybackQuality('hd1080');
+          }
+        },
+      },
+    });
   }
 
   function select(index) {
@@ -42,12 +116,20 @@ const VideoGallery = (() => {
     elTitle.textContent = video.title;
     elDesc.textContent = video.desc;
 
-    // carrega o vídeo real ou mostra o placeholder
+    // destrói o player anterior, se existir
+    if (player && typeof player.destroy === 'function') {
+      player.destroy();
+      player = null;
+    }
+
     if (hasRealId(video)) {
-      elPlaceholder.style.display = 'none';
-      elFrameWrap.style.display = 'block';
-      elFrameWrap.innerHTML =
-        `<iframe src="${buildEmbedUrl(video.id)}" title="${video.title}" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+      elPlaceholder.style.display = 'flex';
+      if (apiReady) {
+        createPlayer(video.id);
+      } else {
+        pendingVideoId = video.id;
+        loadYouTubeApi();
+      }
     } else {
       elPlaceholder.style.display = 'flex';
       elFrameWrap.style.display = 'none';
