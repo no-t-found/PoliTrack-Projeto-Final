@@ -31,7 +31,7 @@ const VideoGallery = (() => {
 
   // referências DOM (preenchidas em init)
   let elFrameWrap, elPlaceholder, elTitle, elDesc, elCountdown, elAutonext;
-  let elSidebar, elToggle, elToggleLabel, elMainArea;
+  let elSidebar, elToggle, elMainArea;
 
   // Um ID real do YouTube tem sempre 11 caracteres e nunca
   // começa por "VIDEO_ID" (usado como placeholder em data.js).
@@ -266,9 +266,6 @@ const VideoGallery = (() => {
     elSidebar.classList.toggle('collapsed', sidebarCollapsed);
     elToggle.setAttribute('aria-expanded', String(!sidebarCollapsed));
     elToggle.setAttribute('aria-label', sidebarCollapsed ? 'Mostrar lista de vídeos' : 'Ocultar lista de vídeos');
-    if (elToggleLabel) {
-      elToggleLabel.textContent = sidebarCollapsed ? 'Mostrar' : 'Ocultar';
-    }
   }
 
   function init() {
@@ -280,7 +277,6 @@ const VideoGallery = (() => {
     elAutonext    = document.getElementById('vid-autonext');
     elSidebar     = document.getElementById('vid-sidebar');
     elToggle      = document.getElementById('vid-toggle');
-    elToggleLabel = document.getElementById('vid-toggle-label');
     elMainArea    = document.getElementById('vid-main');
 
     elMainArea.addEventListener('mouseenter', pause);

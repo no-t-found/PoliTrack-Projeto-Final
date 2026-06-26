@@ -46,6 +46,21 @@
   pointer-events: none;
 }
 
+/* Hover na sidebar colapsada expande-a temporariamente, sem
+   precisar de clicar no botão — facilita reabrir por engano
+   ou só para espreitar a lista sem confirmar a ação. Volta a
+   encolher quando o rato sai, a não ser que se clique no botão
+   para a deixar aberta de forma persistente. */
+.vid-sidebar.collapsed:hover {
+  width: calc(300 * var(--u));
+  padding: calc(48 * var(--u)) calc(28 * var(--u)) calc(40 * var(--u)) calc(28 * var(--u));
+}
+.vid-sidebar.collapsed:hover .vid-sidebar-content {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.1s;
+}
+
 .vid-sidebar-content {
   display: flex;
   flex-direction: column;
@@ -63,17 +78,14 @@
   position: absolute;
   top: calc(48 * var(--u));
   right: calc(20 * var(--u));
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid rgba(255, 255, 255, 0.95);
   color: var(--bg);
-  font-family: var(--f-label);
-  font-size: max(9px, calc(11 * var(--u)));
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  padding: 7px 12px;
   border-radius: 40px;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s, right 0.3s ease;
@@ -92,6 +104,14 @@
   right: 8px;
   position: static;
   margin: 0 auto;
+}
+/* Durante o hover (expansão temporária), o botão volta à
+   posição absoluta no canto, como no estado totalmente aberto —
+   mantém a transição suave em vez de saltar entre layouts. */
+.vid-sidebar.collapsed:hover .vid-toggle {
+  position: absolute;
+  right: calc(20 * var(--u));
+  margin: 0;
 }
 .vid-toggle svg {
   width: 15px;
@@ -126,7 +146,15 @@
   color: #fff;
   margin-top: calc(22 * var(--u));
   margin-bottom: calc(12 * var(--u));
+  padding-top: calc(18 * var(--u));
   padding-right: calc(24 * var(--u));
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* A primeira categoria não tem linha por cima — fica colada
+   ao cabeçalho "Demonstração", sem separador a meio do nada. */
+.vid-cat:first-of-type {
+  border-top: none;
+  padding-top: 0;
 }
 
 /* Item de vídeo na sidebar.

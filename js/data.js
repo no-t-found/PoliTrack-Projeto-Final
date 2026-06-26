@@ -89,8 +89,10 @@ const CONFIG = {
   /** Tempo de inatividade antes de o modo kiosk começar, em ms */
   idleTimeoutMs: 30000,
 
-  /** Tempo entre cada avanço de secção no modo kiosk, em ms */
-  kioskIntervalMs: 10000,
+  /** Tempo entre cada avanço de secção no modo kiosk, em ms.
+     Igual ao idleTimeoutMs — depois do primeiro avanço, cada
+     secção subsequente também fica 30s antes de avançar. */
+  kioskIntervalMs: 30000,
 
   /** Índice da secção de vídeos (Demonstração) — o modo kiosk
    *  geral (avanço de secção) não se aplica aqui; em vez disso,
