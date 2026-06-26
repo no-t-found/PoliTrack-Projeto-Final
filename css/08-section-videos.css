@@ -55,21 +55,27 @@
 /* Botão de ocultar/mostrar — discreto em repouso (não compete
    com o conteúdo da sidebar), mas com glow suave e tamanho que
    garante boa afordância de "isto é clicável" mesmo sem hover. */
+/* Mesmo tratamento visual do botão "início" (pílula, borda fina,
+   tipografia PP Neue Machina), mas com fill de cor clara em vez
+   de transparente — para se destacar sobre o fundo escuro da
+   sidebar de vídeos. */
 .vid-toggle {
   position: absolute;
   top: calc(48 * var(--u));
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
-  color: var(--bg);
-  cursor: pointer;
+  right: calc(20 * var(--u));
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  color: var(--bg);
+  font-family: var(--f-label);
+  font-size: max(9px, calc(11 * var(--u)));
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 7px 12px;
+  border-radius: 40px;
+  cursor: pointer;
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s, right 0.3s ease;
   z-index: 5;
 }
@@ -77,7 +83,6 @@
   background: #fff;
   border-color: var(--accent);
   box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.14);
-  color: var(--accent);
 }
 .vid-toggle:focus-visible {
   outline: 2px solid var(--accent);

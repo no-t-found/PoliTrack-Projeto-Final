@@ -37,6 +37,11 @@ const Navigation = (() => {
   function startKioskMode() {
     elKioskPip.classList.add('vis');
     kioskTimer = setInterval(() => {
+      // Na secção de vídeos, o avanço automático é controlado
+      // pelo número de loops de cada vídeo (ver videos.js), não
+      // por este temporizador de secções — por isso não avança
+      // enquanto a pessoa estiver a ver essa secção.
+      if (currentSection === CONFIG.videoSectionIndex) return;
       goTo((currentSection + 1) % CONFIG.totalSections);
     }, CONFIG.kioskIntervalMs);
   }

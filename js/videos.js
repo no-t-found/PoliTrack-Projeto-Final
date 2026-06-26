@@ -25,10 +25,13 @@ const VideoGallery = (() => {
   let apiReady = false;
   let pendingVideoId = null;
   let player = null;
+  let qualityCheckTimer = null;
+  let loopCount = 0;
+  let videoDuration = null;
 
   // referências DOM (preenchidas em init)
   let elFrameWrap, elPlaceholder, elTitle, elDesc, elCountdown, elAutonext;
-  let elSidebar, elToggle, elMainArea;
+  let elSidebar, elToggle, elToggleLabel, elMainArea;
 
   // Um ID real do YouTube tem sempre 11 caracteres e nunca
   // começa por "VIDEO_ID" (usado como placeholder em data.js).
@@ -60,6 +63,17 @@ const VideoGallery = (() => {
     elFrameWrap.classList.remove('is-playing');
     elFrameWrap.innerHTML = '<div id="yt-player-target"></div>';
 
+    /** Tenta forçar 1080p; se a melhor qualidade disponível for
+     *  inferior (rede fraca), usa a mais alta que existir. */
+    function enforceTopQuality(target) {
+      const levels = target.getAvailableQualityLevels();
+      if (levels.includes('hd1080')) {
+        target.setPlaybackQuality('hd1080');
+      } else if (levels.length > 0) {
+        target.setPlaybackQuality(levels[0]); // já vem ordenado da melhor para a pior
+      }
+    }
+
     player = new YT.Player('yt-player-target', {
       videoId,
       playerVars: {
@@ -74,13 +88,24 @@ const VideoGallery = (() => {
         iv_load_policy: 3,
         disablekb: 1,
         fs: 0,
+        vq: 'hd1080',
         origin: window.location.origin,
       },
       events: {
         onReady: (e) => {
           // Força 1080p de forma explícita via API — mais
           // fiável do que o parâmetro de URL "vq" isolado.
-          e.target.setPlaybackQuality('hd1080');
+          // Tenta de imediato e outra vez num instante depois,
+          // porque a lista de qualidades disponíveis só fica
+          // completa após o primeiro segundo de buffer.
+          enforceTopQuality(e.target);
+          setTimeout(() => enforceTopQuality(e.target), 1000);
+
+          // Duração real do vídeo — usada para sincronizar a
+          // barra de progresso visual com o loop verdadeiro,
+          // em vez de um tempo fixo arbitrário.
+          loopCount = 0;
+          videoDuration = e.target.getDuration() || CONFIG.videoDurationSec;
           e.target.playVideo();
         },
         onStateChange: (e) => {
@@ -89,16 +114,39 @@ const VideoGallery = (() => {
           if (e.data === YT.PlayerState.PLAYING) {
             elPlaceholder.style.display = 'none';
             elFrameWrap.classList.add('is-playing');
-            // reforça 1080p sempre que o estado muda para
-            // reproduzir, caso o YouTube tenha ajustado a
-            // qualidade automaticamente por largura de banda
-            e.target.setPlaybackQuality('hd1080');
+            enforceTopQuality(e.target);
+            startProgressBar();
+
+            // Verificação periódica: o YouTube pode reduzir a
+            // qualidade a meio da reprodução por largura de
+            // banda — volta a forçar 1080p sempre que isso
+            // acontecer, enquanto o vídeo estiver a correr.
+            clearInterval(qualityCheckTimer);
+            qualityCheckTimer = setInterval(() => {
+              if (e.target.getPlayerState() === YT.PlayerState.PLAYING) {
+                enforceTopQuality(e.target);
+              }
+            }, 4000);
+          } else {
+            clearInterval(qualityCheckTimer);
+          }
+
+          // Estado 0 = chegou ao fim de um loop (antes de o
+          // parâmetro loop:1 o reiniciar automaticamente). Conta
+          // as repetições reais do vídeo — avança para o próximo
+          // item da galeria só depois de completar o número de
+          // voltas configurado em CONFIG.videoLoopsBeforeAdvance.
+          if (e.data === YT.PlayerState.ENDED) {
+            loopCount++;
+            if (loopCount >= CONFIG.videoLoopsBeforeAdvance) {
+              select((currentIndex + 1) % VIDEOS.length);
+            } else {
+              startProgressBar();
+            }
           }
         },
         onPlaybackQualityChange: (e) => {
-          if (e.data !== 'hd1080' && e.target.getAvailableQualityLevels().includes('hd1080')) {
-            e.target.setPlaybackQuality('hd1080');
-          }
+          enforceTopQuality(e.target);
         },
       },
     });
@@ -113,6 +161,8 @@ const VideoGallery = (() => {
   function select(index, { loadPlayer = true } = {}) {
     const video = VIDEOS[index];
     currentIndex = index;
+    loopCount = 0;
+    videoDuration = null;
 
     // atualiza estado ativo na sidebar
     document.querySelectorAll('.vid-item-row').forEach((el, i) => {
@@ -124,10 +174,21 @@ const VideoGallery = (() => {
     elDesc.textContent = video.desc;
 
     // destrói o player anterior, se existir
+    clearInterval(qualityCheckTimer);
+    clearInterval(countdownTimer);
     if (player && typeof player.destroy === 'function') {
       player.destroy();
       player = null;
     }
+
+    // reset visual das barras de progresso — o player real
+    // (quando carregado) vai animar a sua própria barra via
+    // startProgressBar(), chamado a partir de onStateChange.
+    document.querySelectorAll('.vid-pf').forEach(el => {
+      el.style.transition = 'none';
+      el.style.width = '0%';
+    });
+    elCountdown.textContent = CONFIG.videoDurationSec;
 
     if (hasRealId(video)) {
       if (loadPlayer) {
@@ -153,27 +214,25 @@ const VideoGallery = (() => {
       elFrameWrap.style.display = 'none';
       elFrameWrap.innerHTML = '';
     }
-
-    startCountdown();
   }
 
-  function startCountdown() {
+  /** Anima a barra de progresso do item atual e a contagem
+   *  decrescente "Próximo em Ns", sincronizadas com a duração
+   *  real do vídeo (detetada em onReady) — não um valor fixo.
+   *  Reinicia a cada loop, já que o vídeo recomeça do zero. */
+  function startProgressBar() {
     clearInterval(countdownTimer);
 
-    // reset de todas as barras de progresso
-    document.querySelectorAll('.vid-pf').forEach(el => {
-      el.style.transition = 'none';
-      el.style.width = '0%';
-    });
-
-    countdown = CONFIG.videoDurationSec;
+    const duration = videoDuration || CONFIG.videoDurationSec;
+    countdown = Math.round(duration);
     elCountdown.textContent = countdown;
 
-    // anima a barra do item atual
     const fill = document.getElementById(`vp-${currentIndex}`);
     if (fill) {
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
       requestAnimationFrame(() => {
-        fill.style.transition = `width ${CONFIG.videoDurationSec}s linear`;
+        fill.style.transition = `width ${duration}s linear`;
         fill.style.width = '100%';
       });
     }
@@ -181,13 +240,13 @@ const VideoGallery = (() => {
     countdownTimer = setInterval(() => {
       if (isPaused) return;
       countdown--;
-      elCountdown.textContent = countdown;
+      elCountdown.textContent = Math.max(countdown, 0);
       if (countdown <= 0) {
         clearInterval(countdownTimer);
-        select((currentIndex + 1) % VIDEOS.length);
       }
     }, 1000);
   }
+
 
   function pause() {
     isPaused = true;
@@ -207,6 +266,9 @@ const VideoGallery = (() => {
     elSidebar.classList.toggle('collapsed', sidebarCollapsed);
     elToggle.setAttribute('aria-expanded', String(!sidebarCollapsed));
     elToggle.setAttribute('aria-label', sidebarCollapsed ? 'Mostrar lista de vídeos' : 'Ocultar lista de vídeos');
+    if (elToggleLabel) {
+      elToggleLabel.textContent = sidebarCollapsed ? 'Mostrar' : 'Ocultar';
+    }
   }
 
   function init() {
@@ -218,6 +280,7 @@ const VideoGallery = (() => {
     elAutonext    = document.getElementById('vid-autonext');
     elSidebar     = document.getElementById('vid-sidebar');
     elToggle      = document.getElementById('vid-toggle');
+    elToggleLabel = document.getElementById('vid-toggle-label');
     elMainArea    = document.getElementById('vid-main');
 
     elMainArea.addEventListener('mouseenter', pause);

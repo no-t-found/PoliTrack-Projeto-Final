@@ -87,8 +87,18 @@ const CONFIG = {
   totalSections: 6,
 
   /** Tempo de inatividade antes de o modo kiosk começar, em ms */
-  idleTimeoutMs: 45000,
+  idleTimeoutMs: 30000,
 
   /** Tempo entre cada avanço de secção no modo kiosk, em ms */
   kioskIntervalMs: 10000,
+
+  /** Índice da secção de vídeos (Demonstração) — o modo kiosk
+   *  geral (avanço de secção) não se aplica aqui; em vez disso,
+   *  cada vídeo da galeria reproduz-se videoLoopsBeforeAdvance
+   *  vezes antes de avançar para o vídeo seguinte. */
+  videoSectionIndex: 3,
+
+  /** Quantas vezes cada vídeo dá a volta completa antes de
+   *  avançar automaticamente para o vídeo seguinte na galeria. */
+  videoLoopsBeforeAdvance: 2,
 };
