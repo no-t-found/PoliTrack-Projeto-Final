@@ -52,27 +52,31 @@
   transition: opacity 0.15s ease;
 }
 
-/* Botão de ocultar/mostrar — sempre visível, com seta clara */
+/* Botão de ocultar/mostrar — discreto em repouso (não compete
+   com o conteúdo da sidebar), mas com glow suave e tamanho que
+   garante boa afordância de "isto é clicável" mesmo sem hover. */
 .vid-toggle {
   position: absolute;
   top: calc(48 * var(--u));
-  right: 8px;
-  width: 28px;
-  height: 28px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.04);
+  color: rgba(255, 255, 255, 0.45);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, border-color 0.2s, right 0.3s ease;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s, right 0.3s ease;
   z-index: 5;
 }
 .vid-toggle:hover {
-  background: rgba(35, 218, 255, 0.12);
-  border-color: rgba(35, 218, 255, 0.4);
+  background: rgba(35, 218, 255, 0.14);
+  border-color: rgba(35, 218, 255, 0.5);
+  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.10);
   color: var(--accent);
 }
 .vid-toggle:focus-visible {
@@ -85,8 +89,8 @@
   margin: 0 auto;
 }
 .vid-toggle svg {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   transition: transform 0.3s ease;
 }
 .vid-sidebar.collapsed .vid-toggle svg {
@@ -98,7 +102,7 @@
    do vídeo no overlay principal. */
 .vid-title-main {
   font-family: var(--f-label);
-  font-size: calc(13 * var(--u));
+  font-size: calc(15 * var(--u));
   font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: none;
@@ -197,6 +201,22 @@
      pointer-events:none impede o YouTube de mostrar o overlay
      de título/canal e os ícones de play/pausa ao detetar hover. */
   pointer-events: none;
+  /* O player do YouTube pinta a sua própria UI nativa durante
+     a fração de segundo em que inicializa, antes do autoplay
+     arrancar — isto é interno ao iframe e pointer-events não
+     o evita. Um fade-in curto esconde esse instante inicial,
+     mostrando o iframe só quando o vídeo já está a correr. */
+  opacity: 0;
+  animation: vidFadeIn 0.2s ease-out 0.6s forwards;
+}
+@keyframes vidFadeIn {
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vid-main iframe {
+    animation: none;
+    opacity: 1;
+  }
 }
 .vid-placeholder {
   display: flex;

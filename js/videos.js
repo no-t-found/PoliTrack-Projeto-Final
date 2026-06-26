@@ -13,14 +13,14 @@ const VideoGallery = (() => {
   let sidebarCollapsed = false;
 
   // referências DOM (preenchidas em init)
-  let elFrameWrap, elPlaceholder, elCat, elTitle, elDesc, elCountdown, elAutonext;
+  let elFrameWrap, elPlaceholder, elTitle, elDesc, elCountdown, elAutonext;
   let elSidebar, elToggle;
 
   function buildEmbedUrl(videoId) {
     return `https://www.youtube-nocookie.com/embed/${videoId}` +
       `?autoplay=1&mute=1&loop=1&playlist=${videoId}` +
       `&controls=0&rel=0&modestbranding=1&playsinline=1` +
-      `&iv_load_policy=3&disablekb=1&fs=0`;
+      `&iv_load_policy=3&disablekb=1&fs=0&vq=hd1080`;
   }
 
   // Um ID real do YouTube tem sempre 11 caracteres e nunca
@@ -39,7 +39,6 @@ const VideoGallery = (() => {
     });
 
     // atualiza overlay de contexto
-    elCat.textContent = video.cat;
     elTitle.textContent = video.title;
     elDesc.textContent = video.desc;
 
@@ -113,7 +112,6 @@ const VideoGallery = (() => {
   function init() {
     elFrameWrap   = document.getElementById('vid-frame-wrap');
     elPlaceholder = document.getElementById('vid-placeholder');
-    elCat         = document.getElementById('vid-now-cat');
     elTitle       = document.getElementById('vid-now-title');
     elDesc        = document.getElementById('vid-now-desc');
     elCountdown   = document.getElementById('vid-countdown');

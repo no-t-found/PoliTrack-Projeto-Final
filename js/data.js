@@ -63,7 +63,7 @@ const VIDEOS = [
     desc: 'Página pessoal — preferências, temas seguidos e histórico de iniciativas consultadas.'
   },
   {
-    id: 'VIDEO_ID_09',
+    id: 'tgmUMnCs2wA',
     cat: 'Sistema de Design',
     title: 'Identidade visual',
     desc: 'Paleta de cor, tipografia — PP Neue Machina, Power Grotesk e Neue Haas Grotesk — tokens e componentes iOS.'
@@ -87,7 +87,7 @@ const CONFIG = {
   totalSections: 6,
 
   /** Tempo de inatividade antes de o modo kiosk começar, em ms */
-  idleTimeoutMs: 20000,
+  idleTimeoutMs: 45000,
 
   /** Tempo entre cada avanço de secção no modo kiosk, em ms */
   kioskIntervalMs: 10000,
