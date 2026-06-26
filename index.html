@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Necessário para os embeds do YouTube na secção de vídeos —
+     sem isto o YouTube devolve "Error 153: Video player
+     configuration error" por falta de referrer válido. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>PoliTrack — Aplicação para transparência política</title>
 
 <!-- ════════════════════════════════════════════════════════
@@ -86,7 +90,7 @@
        Frame Figma: 526-12985 -->
   <section id="s2">
     <div class="s2-inner">
-      <p class="s2-title">Uma aplicação para <span class="accent">transparência parlamentar.</span></p>
+      <p class="s2-title">Uma aplicação para<br><span class="accent">transparência parlamentar.</span></p>
 
       <div class="s2-mid">
         <img class="s2-hero-img" src="assets/images/enquadramento-hero.png" alt="Ecrãs da aplicação PoliTrack — feed, filtros e página de partido">

@@ -24,7 +24,8 @@
   gap: 0;
   width: calc(1778 * var(--u));
   flex: 1;
-  justify-content: flex-start;
+  min-height: 0;
+  justify-content: space-between;
 }
 
 /* As 3 frases ficam mais compactas — espaçamento reduzido em
@@ -76,8 +77,7 @@
   flex-wrap: nowrap;
   white-space: nowrap;
   width: calc(1778 * var(--u));
-  margin-top: calc(70 * var(--u));
-  margin-bottom: calc(30 * var(--u));
+  margin-bottom: calc(20 * var(--u));
 }
 .mf-note b {
   font-family: var(--f-label);

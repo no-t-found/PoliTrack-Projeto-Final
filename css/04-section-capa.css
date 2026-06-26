@@ -28,10 +28,11 @@
   position: absolute;
   left: calc(1022 * var(--u));
   right: calc(20 * var(--u));
-  top: calc(90 * var(--u) - 42 * var(--u));
+  top: 0;
+  bottom: 0;
   padding: calc(42 * var(--u));
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: flex-end;
 }
 .phone-img {

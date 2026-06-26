@@ -161,13 +161,19 @@
   font-weight: 800;
 }
 
-/* Barra de progresso (autoplay) sob cada título */
+/* Barra de progresso (autoplay) sob o item ativo apenas.
+   Nos itens inativos fica invisível — caso contrário a faixa
+   cinza-clara de fundo aparece como uma linha horizontal
+   indesejada sob todos os subtítulos, mesmo sem progresso. */
 .vid-pb {
   height: 2px;
-  background: rgba(255, 255, 255, 0.10);
+  background: transparent;
   border-radius: 1px;
   overflow: hidden;
   width: 100%;
+}
+.vid-item-row.active .vid-pb {
+  background: rgba(255, 255, 255, 0.10);
 }
 .vid-pf {
   height: 100%;

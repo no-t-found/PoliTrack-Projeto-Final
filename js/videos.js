@@ -47,7 +47,7 @@ const VideoGallery = (() => {
       elPlaceholder.style.display = 'none';
       elFrameWrap.style.display = 'block';
       elFrameWrap.innerHTML =
-        `<iframe src="${buildEmbedUrl(video.id)}" title="${video.title}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        `<iframe src="${buildEmbedUrl(video.id)}" title="${video.title}" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
     } else {
       elPlaceholder.style.display = 'flex';
       elFrameWrap.style.display = 'none';
