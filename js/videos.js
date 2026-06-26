@@ -56,8 +56,9 @@ const VideoGallery = (() => {
 
   function createPlayer(videoId) {
     elFrameWrap.style.display = 'block';
-    elFrameWrap.innerHTML = '<div id="yt-player-target"></div>';
+    elFrameWrap.classList.add('has-player');
     elFrameWrap.classList.remove('is-playing');
+    elFrameWrap.innerHTML = '<div id="yt-player-target"></div>';
 
     player = new YT.Player('yt-player-target', {
       videoId,
@@ -103,7 +104,13 @@ const VideoGallery = (() => {
     });
   }
 
-  function select(index) {
+  function buildPosterUrl(videoId) {
+    // Thumbnail estática do YouTube — é só uma imagem (alguns KB),
+    // nada a ver com o peso do player/JS da IFrame API.
+    return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+  }
+
+  function select(index, { loadPlayer = true } = {}) {
     const video = VIDEOS[index];
     currentIndex = index;
 
@@ -123,12 +130,23 @@ const VideoGallery = (() => {
     }
 
     if (hasRealId(video)) {
-      elPlaceholder.style.display = 'flex';
-      if (apiReady) {
-        createPlayer(video.id);
+      if (loadPlayer) {
+        elPlaceholder.style.display = 'flex';
+        if (apiReady) {
+          createPlayer(video.id);
+        } else {
+          pendingVideoId = video.id;
+          loadYouTubeApi();
+        }
       } else {
-        pendingVideoId = video.id;
-        loadYouTubeApi();
+        // Estado leve: poster estático em vez do player pesado.
+        // Usado só na carga inicial, antes da secção entrar no
+        // viewport — ver setupLazyLoad().
+        elPlaceholder.style.display = 'none';
+        elFrameWrap.style.display = 'block';
+        elFrameWrap.classList.remove('is-playing', 'has-player');
+        elFrameWrap.innerHTML =
+          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" loading="lazy">`;
       }
     } else {
       elPlaceholder.style.display = 'flex';
@@ -200,14 +218,46 @@ const VideoGallery = (() => {
     elAutonext    = document.getElementById('vid-autonext');
     elSidebar     = document.getElementById('vid-sidebar');
     elToggle      = document.getElementById('vid-toggle');
+    elMainArea    = document.getElementById('vid-main');
 
-    const mainArea = document.getElementById('vid-main');
-    mainArea.addEventListener('mouseenter', pause);
-    mainArea.addEventListener('mouseleave', resume);
+    elMainArea.addEventListener('mouseenter', pause);
+    elMainArea.addEventListener('mouseleave', resume);
 
     elToggle.addEventListener('click', toggleSidebar);
 
-    select(0);
+    // Estado inicial leve: mostra o título/descrição do primeiro
+    // vídeo e um poster estático (thumbnail), sem carregar nada
+    // pesado do YouTube ainda. select(0) com loadPlayer=false só
+    // atualiza a UI textual e a barra de progresso continua
+    // parada — o player real só nasce quando a secção entra no
+    // viewport (ver setupLazyLoad abaixo).
+    select(0, { loadPlayer: false });
+    setupLazyLoad();
+  }
+
+  /** Lazy-load real: só cria o primeiro player pesado da IFrame
+   *  API quando a secção #s5 entra no viewport. Em ecrãs onde a
+   *  pessoa nunca chega lá (sai antes, ou no modo kiosk muda de
+   *  direção), o player do YouTube nunca chega a carregar. */
+  function setupLazyLoad() {
+    const section = document.getElementById('s5');
+    if (!section || !('IntersectionObserver' in window)) {
+      // sem suporte a IntersectionObserver — carrega de imediato
+      // como fallback, em vez de nunca mostrar vídeo nenhum.
+      select(currentIndex, { loadPlayer: true });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          select(currentIndex, { loadPlayer: true });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(section);
   }
 
   // API pública — selectVid() é chamado inline pelos botões no HTML

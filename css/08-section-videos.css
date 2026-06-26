@@ -209,21 +209,37 @@
      UI nativa do YouTube. */
   pointer-events: none;
 }
-/* Visibilidade controlada pelo JS (videos.js, evento
+/* Poster estático (thumbnail) mostrado antes do player pesado
+   carregar — ver setupLazyLoad() em videos.js. É só uma <img>,
+   não precisa do fade controlado por is-playing (não há flash
+   de UI nativa a esconder numa imagem). */
+.vid-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Visibilidade do PLAYER controlada pelo JS (videos.js, evento
    onStateChange da IFrame API) — só fica visível quando o
    YouTube confirma que o vídeo está mesmo a reproduzir.
    Isto elimina o "flash" de controlos nativos que aparece
    enquanto o player inicializa, sem depender de um tempo fixo
-   que varia com a velocidade de rede de cada pessoa. */
-#vid-frame-wrap {
+   que varia com a velocidade de rede de cada pessoa.
+
+   Aplica-se só quando há um player real a carregar (classe
+   .has-player) — o poster estático (.vid-poster) não passa por
+   este fade, fica sempre com opacidade total. */
+#vid-frame-wrap.has-player {
   opacity: 0;
   transition: opacity 0.2s ease-out;
 }
-#vid-frame-wrap.is-playing {
+#vid-frame-wrap.has-player.is-playing {
   opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
-  #vid-frame-wrap {
+  #vid-frame-wrap.has-player {
     transition: none;
   }
 }
