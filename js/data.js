@@ -27,7 +27,7 @@ const VIDEOS = [
     desc: 'Navegação por categoria CAP — chip no card ou via filtros — para explorar iniciativas por área temática.'
   },
   {
-    id: 'EygDlVG7cG4',
+    id: 'SIRFGLYjfTY',
     cat: 'Pesquisa',
     title: 'Busca semântica',
     desc: 'Pesquisa por texto livre com motor semântico: resultados incluem iniciativas relacionadas por significado, não só por palavra exata.'
