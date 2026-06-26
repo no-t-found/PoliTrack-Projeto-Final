@@ -19,7 +19,8 @@ const VideoGallery = (() => {
   function buildEmbedUrl(videoId) {
     return `https://www.youtube-nocookie.com/embed/${videoId}` +
       `?autoplay=1&mute=1&loop=1&playlist=${videoId}` +
-      `&controls=0&rel=0&modestbranding=1&playsinline=1`;
+      `&controls=0&rel=0&modestbranding=1&playsinline=1` +
+      `&iv_load_policy=3&disablekb=1&fs=0`;
   }
 
   // Um ID real do YouTube tem sempre 11 caracteres e nunca

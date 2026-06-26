@@ -30,7 +30,7 @@
   right: calc(20 * var(--u));
   top: 0;
   bottom: 0;
-  padding: calc(42 * var(--u));
+  padding: calc(42 * var(--u)) calc(42 * var(--u)) 0 calc(42 * var(--u));
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;

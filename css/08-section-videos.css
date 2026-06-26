@@ -100,8 +100,8 @@
   font-family: var(--f-label);
   font-size: calc(13 * var(--u));
   font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--accent);
   margin-bottom: calc(22 * var(--u));
   padding-right: calc(24 * var(--u));
@@ -114,7 +114,7 @@
   font-weight: 700;
   line-height: calc(20 * var(--u));
   letter-spacing: calc(-0.3 * var(--u));
-  color: rgba(255, 255, 255, 0.4);
+  color: #fff;
   margin-top: calc(22 * var(--u));
   margin-bottom: calc(12 * var(--u));
   padding-right: calc(24 * var(--u));
@@ -122,8 +122,8 @@
 
 /* Item de vídeo na sidebar.
    Sem traços verticais "|" antes do texto — ruído visual
-   inútil. A única indicação de seleção é a linha horizontal
-   fina por baixo do item ativo. */
+   inútil. A única indicação de seleção é a barra de progresso
+   dinâmica (.vid-pb/.vid-pf) — sem linha estática adicional. */
 .vid-item-row {
   display: flex;
   flex-direction: column;
@@ -133,13 +133,8 @@
   cursor: pointer;
   background: none;
   border: none;
-  border-bottom: 1.5px solid transparent;
   text-align: left;
   width: 100%;
-  transition: border-color 0.2s;
-}
-.vid-item-row.active {
-  border-bottom-color: var(--accent);
 }
 .vid-item-title {
   font-family: var(--f-label);
@@ -198,6 +193,10 @@
   width: 100%;
   height: 100%;
   border: none;
+  /* Vídeo é só decorativo (autoplay/loop, sem controlo manual).
+     pointer-events:none impede o YouTube de mostrar o overlay
+     de título/canal e os ícones de play/pausa ao detetar hover. */
+  pointer-events: none;
 }
 .vid-placeholder {
   display: flex;

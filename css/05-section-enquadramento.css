@@ -47,12 +47,13 @@
 
 /* Imagem hero — só a imagem enviada, sem nenhum container
    decorativo importado do Figma (sem fundo, sombra ou
-   border-radius artificiais por cima). */
+   border-radius artificiais por cima). Largura sempre igual
+   à da linha do footer (ambos filhos diretos de .s2-inner,
+   sem padding lateral próprio). */
 .s2-hero-img {
-  flex: 1;
-  min-height: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
   display: block;

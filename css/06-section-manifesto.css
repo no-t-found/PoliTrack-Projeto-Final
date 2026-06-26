@@ -60,7 +60,8 @@
   line-height: calc(95 * var(--u));
   letter-spacing: calc(-0.3 * var(--u));
   color: #113742;
-  width: calc(1554 * var(--u));
+  flex: 1;
+  min-width: 0;
 }
 .mf-sentence .accent {
   color: var(--primary);
