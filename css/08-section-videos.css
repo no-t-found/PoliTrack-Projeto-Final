@@ -207,7 +207,7 @@
      o evita. Um fade-in curto esconde esse instante inicial,
      mostrando o iframe só quando o vídeo já está a correr. */
   opacity: 0;
-  animation: vidFadeIn 0.2s ease-out 0.6s forwards;
+  animation: vidFadeIn 0.25s ease-out 1.2s forwards;
 }
 @keyframes vidFadeIn {
   to { opacity: 1; }
@@ -256,6 +256,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-left: calc(48 * var(--u));
 }
 /* Nota: sem text-transform uppercase — nunca usar tudo em maiúsculas */
 .vid-ctx-cat {

@@ -33,9 +33,8 @@
 }
 
 /* Bloco do meio: imagem hero + nota de investigação.
-   justify-content:center centra a imagem no espaço disponível
-   entre o título (acima) e a nota (abaixo) — a nota fica logo
-   a seguir à imagem, não presa ao fundo do ecrã. */
+   justify-content:center centra o bloco no espaço disponível
+   entre o título (acima) e a nota (abaixo). */
 .s2-mid {
   display: flex;
   flex-direction: column;
@@ -43,17 +42,17 @@
   flex: 1;
   min-height: 0;
   justify-content: center;
+  padding-top: calc(40 * var(--u));
   padding-bottom: calc(10 * var(--u));
 }
 
 /* Imagem hero — só a imagem enviada, sem nenhum container
    decorativo importado do Figma (sem fundo, sombra ou
-   border-radius artificiais por cima). Largura aumentada
-   proporcionalmente (110% do contentor, centrada) para ocupar
-   mais espaço sem distorcer a proporção original. */
+   border-radius artificiais por cima). Largura igual à da
+   linha do footer (ambos filhos diretos de .s2-inner, sem
+   padding lateral próprio). */
 .s2-hero-img {
-  width: 110%;
-  margin-left: -5%;
+  width: 100%;
   height: auto;
   max-height: 100%;
   object-fit: contain;
