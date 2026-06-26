@@ -79,8 +79,6 @@ const VideoGallery = (() => {
       playerVars: {
         autoplay: 1,
         mute: 1,
-        loop: 1,
-        playlist: videoId,
         controls: 0,
         rel: 0,
         modestbranding: 1,
@@ -131,16 +129,21 @@ const VideoGallery = (() => {
             clearInterval(qualityCheckTimer);
           }
 
-          // Estado 0 = chegou ao fim de um loop (antes de o
-          // parâmetro loop:1 o reiniciar automaticamente). Conta
-          // as repetições reais do vídeo — avança para o próximo
-          // item da galeria só depois de completar o número de
-          // voltas configurado em CONFIG.videoLoopsBeforeAdvance.
+          // Estado 0 = o vídeo chegou ao fim de verdade (sem o
+          // parâmetro loop:1, que impedia este evento de disparar
+          // e por isso travava o avanço automático por completo).
+          // Conta as repetições e avança para o próximo item da
+          // galeria ao atingir CONFIG.videoLoopsBeforeAdvance —
+          // por defeito é 1, ou seja, avança logo no fim da
+          // primeira reprodução. Se for >1, reinicia manualmente
+          // o vídeo do início para as voltas extra.
           if (e.data === YT.PlayerState.ENDED) {
             loopCount++;
             if (loopCount >= CONFIG.videoLoopsBeforeAdvance) {
               select((currentIndex + 1) % VIDEOS.length);
             } else {
+              e.target.seekTo(0);
+              e.target.playVideo();
               startProgressBar();
             }
           }
