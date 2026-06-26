@@ -110,6 +110,8 @@
    posição do estado totalmente aberto — mantém a transição
    suave em vez de saltar entre layouts. */
 .vid-sidebar.collapsed:hover .vid-toggle {
+  right: calc(20 * var(--u));
+}
 .vid-toggle svg {
   width: 15px;
   height: 15px;
