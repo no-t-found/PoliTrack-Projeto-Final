@@ -79,7 +79,7 @@
   top: calc(48 * var(--u));
   right: calc(20 * var(--u));
   height: 34px;
-  padding: 0 16px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,12 +104,14 @@
    cápsula, aberto ou colapsado — só o "right" muda ligeiramente
    para se ajustar à faixa estreita da sidebar colapsada. */
 .vid-sidebar.collapsed .vid-toggle {
-  right: 5px;
+  left: 7px;
+  right: 7px;
 }
 /* Durante o hover (expansão temporária), o botão volta à
    posição do estado totalmente aberto — mantém a transição
    suave em vez de saltar entre layouts. */
 .vid-sidebar.collapsed:hover .vid-toggle {
+  left: auto;
   right: calc(20 * var(--u));
 }
 .vid-toggle svg {
@@ -132,6 +134,7 @@
   text-transform: none;
   color: var(--accent);
   height: 34px;
+  margin-top: 0;
   display: flex;
   align-items: center;
   margin-bottom: calc(22 * var(--u));
@@ -146,9 +149,9 @@
   line-height: calc(20 * var(--u));
   letter-spacing: calc(-0.3 * var(--u));
   color: #fff;
-  margin-top: calc(28 * var(--u));
-  margin-bottom: calc(16 * var(--u));
-  padding-top: calc(18 * var(--u));
+  margin-top: calc(18 * var(--u));
+  margin-bottom: calc(8 * var(--u));
+  padding-top: calc(14 * var(--u));
   padding-right: calc(24 * var(--u));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -157,7 +160,7 @@
 .vid-cat:first-of-type {
   border-top: none;
   padding-top: 0;
-  margin-top: calc(28 * var(--u));
+  margin-top: calc(18 * var(--u));
 }
 
 /* Item de vídeo na sidebar.
