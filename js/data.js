@@ -57,7 +57,7 @@ const VIDEOS = [
     desc: 'Card expandido — votos por partido, autores, datas, estado atual e timeline do processo legislativo.'
   },
   {
-    id: 'VIDEO_ID_08',
+    id: 'IZQEd1NjTH8',
     cat: 'Pessoal',
     title: 'Perfil',
     desc: 'Página pessoal — preferências, temas seguidos e histórico de iniciativas consultadas.'
@@ -90,9 +90,10 @@ const CONFIG = {
   idleTimeoutMs: 30000,
 
   /** Tempo entre cada avanço de secção no modo kiosk, em ms.
-     Igual ao idleTimeoutMs — depois do primeiro avanço, cada
-     secção subsequente também fica 30s antes de avançar. */
-  kioskIntervalMs: 30000,
+     Mais curto que o idleTimeoutMs — o primeiro avanço espera
+     30s de inatividade, mas depois disso cada secção fica
+     menos tempo, para o ciclo de exposição passar mais rápido. */
+  kioskIntervalMs: 15000,
 
   /** Índice da secção de vídeos (Demonstração) — o modo kiosk
    *  geral (avanço de secção) não se aplica aqui; em vez disso,
@@ -102,5 +103,5 @@ const CONFIG = {
 
   /** Quantas vezes cada vídeo dá a volta completa antes de
    *  avançar automaticamente para o vídeo seguinte na galeria. */
-  videoLoopsBeforeAdvance: 2,
+  videoLoopsBeforeAdvance: 1,
 };
