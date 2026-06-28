@@ -140,17 +140,20 @@
    ficar claro. A distância entre o fim de uma secção e a régua
    da secção seguinte é sempre igual à distância entre essa régua
    e o título que vem depois dela (ritmo vertical consistente).
-   Todos os valores a 50% do que eram antes. */
+   Valores aumentados em 20% em relação à versão anterior. */
 
 /* Bloco "cabeçalho da app" (Demonstração) — espaço generoso até
-   à primeira categoria, maior que tudo o que vem a seguir. */
+   à primeira categoria, maior que tudo o que vem a seguir, com
+   uma linha divisória própria a marcar a transição. */
 .vid-title-main {
-  margin-bottom: calc(20 * var(--u));
+  margin-bottom: calc(24 * var(--u));
+  padding-bottom: calc(20 * var(--u));
+  border-bottom: 1px solid #fff;
 }
 
 .vid-cat-wrap {
-  margin-top: calc(14 * var(--u));
-  padding-top: calc(14 * var(--u));
+  margin-top: calc(16.8 * var(--u));
+  padding-top: calc(16.8 * var(--u));
   padding-right: calc(12 * var(--u));
   border-top: 1px solid #fff;
 }
@@ -166,7 +169,7 @@
   line-height: calc(20 * var(--u));
   letter-spacing: calc(-0.2 * var(--u));
   color: #fff;
-  margin: 0 0 calc(10 * var(--u)) 0;
+  margin: 0 0 calc(12 * var(--u)) 0;
 }
 
 /* Item de vídeo na sidebar.
@@ -179,7 +182,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 0 calc(12 * var(--u)) 0 0;
-  margin-bottom: calc(7 * var(--u));
+  margin-bottom: calc(8.4 * var(--u));
   cursor: pointer;
   background: none;
   border: none;
@@ -233,7 +236,18 @@
 /* Espaço livre generoso no final da sidebar, depois do último
    item — para a lista não terminar a colar ao fundo do ecrã. */
 .vid-sidebar-content {
-  padding-bottom: calc(30 * var(--u));
+  padding-bottom: calc(36 * var(--u));
+}
+
+/* Linha divisória no final da secção toda, depois do último
+   item — fecha o bloco com o mesmo tratamento visual da linha
+   que abre a lista (a seguir a "Demonstração"). */
+.vid-sidebar-content::after {
+  content: '';
+  display: block;
+  height: 0;
+  margin-top: calc(16.8 * var(--u));
+  border-top: 1px solid #fff;
 }
 
 /* ── Área principal do vídeo ── */
@@ -330,14 +344,14 @@
   font-family: var(--f-display);
   font-size: max(20px, calc(30 * var(--u)));
   font-weight: 400;
-  color: var(--primary);
+  color: var(--bg);
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 .vid-ctx-desc {
   font-family: var(--f-display);
   font-size: max(12px, calc(15 * var(--u)));
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(17, 55, 66, 0.7);
   line-height: 1.45;
   max-width: calc(600 * var(--u));
   margin-top: 4px;
