@@ -146,9 +146,18 @@
    à primeira categoria, maior que tudo o que vem a seguir, com
    uma linha divisória própria a marcar a transição. */
 .vid-title-main {
-  margin-bottom: calc(24 * var(--u));
-  padding-bottom: calc(20 * var(--u));
-  border-bottom: 1px solid #fff;
+  margin-bottom: 0;
+}
+
+/* Linha divisória separada do título — não interfere na altura
+   fixa de 34px que mantém "Demonstração" centrado com o botão
+   de toggle. Fica abaixo de ambos, e todo o conteúdo seguinte
+   desce com ela. */
+.vid-header-divider {
+  height: 0;
+  border-top: 1px solid #fff;
+  margin-top: calc(20 * var(--u));
+  margin-bottom: calc(20 * var(--u));
 }
 
 .vid-cat-wrap {
@@ -338,7 +347,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-left: calc(38 * var(--u));
+  margin-left: calc(36 * var(--u));
 }
 .vid-ctx-title {
   font-family: var(--f-display);
