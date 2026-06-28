@@ -1,7 +1,6 @@
 /* ════════════════════════════════════════════════════════════
    SECÇÃO 4 — DEMONSTRAÇÃO (VÍDEOS)
-   Sidebar de navegação fiel ao frame Figma 528-13392
-   + área principal com player e overlay de contexto.
+   Sidebar de navegação + área principal com player e overlay.
 ═══════════════════════════════════════════════════════════════ */
 
 #s5 {
@@ -14,15 +13,19 @@
    Pode ser ocultada com o botão .vid-toggle — ver lógica em
    js/videos.js. Quando colapsada, fica uma faixa estreita
    sempre visível e clicável para o utilizador saber que pode
-   voltar a abri-la (nunca desaparece por completo). */
+   voltar a abri-la (nunca desaparece por completo).
+
+   Fundo: mesmo gradiente teal da capa, recriado em CSS puro
+   (a imagem original do Figma é um asset temporário que
+   expira — isto fica permanente e idêntico visualmente). */
 .vid-sidebar {
-  width: calc(300 * var(--u));
+  width: calc(320 * var(--u));
   flex-shrink: 0;
-  background: var(--bg);
+  background: linear-gradient(135deg, #0c2830 0%, #1a4a52 55%, #2d6b6f 100%);
   display: flex;
   flex-direction: column;
-  padding: calc(48 * var(--u)) calc(28 * var(--u)) calc(40 * var(--u)) calc(28 * var(--u));
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: calc(48 * var(--u)) calc(32 * var(--u)) calc(40 * var(--u)) calc(32 * var(--u));
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
@@ -52,8 +55,8 @@
    encolher quando o rato sai, a não ser que se clique no botão
    para a deixar aberta de forma persistente. */
 .vid-sidebar.collapsed:hover {
-  width: calc(300 * var(--u));
-  padding: calc(48 * var(--u)) calc(28 * var(--u)) calc(40 * var(--u)) calc(28 * var(--u));
+  width: calc(320 * var(--u));
+  padding: calc(48 * var(--u)) calc(32 * var(--u)) calc(40 * var(--u)) calc(32 * var(--u));
 }
 .vid-sidebar.collapsed:hover .vid-sidebar-content {
   opacity: 1;
@@ -67,117 +70,123 @@
   transition: opacity 0.15s ease;
 }
 
-/* Botão de ocultar/mostrar — discreto em repouso (não compete
-   com o conteúdo da sidebar), mas com glow suave e tamanho que
-   garante boa afordância de "isto é clicável" mesmo sem hover. */
-/* Mesmo tratamento visual do botão "início" (pílula, borda fina,
-   tipografia PP Neue Machina), mas com fill de cor clara em vez
-   de transparente — para se destacar sobre o fundo escuro da
-   sidebar de vídeos. */
+/* ── Botão de ocultar/mostrar ──
+   Mesmo tratamento gráfico do botão "início": cápsula com
+   borda fina, fundo transparente, mesma tipografia e tamanho.
+   O hover só muda a cor de fundo (preenchimento), sem glow.
+   O botão NUNCA muda de tamanho entre aberto e colapsado — só
+   muda de posição (right), para a seta ficar sempre visível
+   na borda direita da sidebar, qualquer que seja o estado. */
 .vid-toggle {
   position: absolute;
   top: calc(48 * var(--u));
-  right: calc(20 * var(--u));
+  right: calc(22 * var(--u));
   height: 34px;
-  padding: 0 10px;
+  width: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  color: var(--bg);
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   border-radius: 40px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s, right 0.3s ease;
+  transition: background 0.2s, right 0.3s ease;
   z-index: 5;
 }
 .vid-toggle:hover {
-  background: #fff;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(35, 218, 255, 0.14);
+  background: rgba(35, 218, 255, 0.18);
 }
 .vid-toggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-/* O botão mantém sempre a mesma posição absoluta e formato de
-   cápsula, aberto ou colapsado — só o "right" muda ligeiramente
-   para se ajustar à faixa estreita da sidebar colapsada. */
+/* Só a posição muda quando colapsada — tamanho e forma da
+   cápsula ficam exatamente iguais ao estado aberto. */
 .vid-sidebar.collapsed .vid-toggle {
-  left: 7px;
-  right: 7px;
+  right: 5px;
 }
-/* Durante o hover (expansão temporária), o botão volta à
-   posição do estado totalmente aberto — mantém a transição
-   suave em vez de saltar entre layouts. */
 .vid-sidebar.collapsed:hover .vid-toggle {
-  left: auto;
-  right: calc(20 * var(--u));
+  right: calc(22 * var(--u));
 }
 .vid-toggle svg {
-  width: 15px;
-  height: 15px;
-  transition: transform 0.3s ease;
+  width: 18px;
+  height: 18px;
 }
-.vid-sidebar.collapsed .vid-toggle svg {
-  transform: rotate(180deg);
-}
+/* A seta não inverte nem encolhe quando colapsada — mantém-se
+   sempre a apontar na mesma direção e ao mesmo tamanho. */
 
-/* Etiqueta "Demonstração" — eyebrow com peso e cor próprios
-   para não se perder na página, mas sem competir com o título
-   do vídeo no overlay principal. */
+/* Etiqueta da secção — só a primeira letra maiúscula (não tudo
+   em caps). Centrada verticalmente com o botão de toggle: mesma
+   altura (34px) e mesmo ponto de partida no topo da sidebar. */
 .vid-title-main {
   font-family: var(--f-label);
-  font-size: calc(15 * var(--u));
+  font-size: calc(17 * var(--u));
   font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: none;
-  color: var(--accent);
+  color: #fff;
   height: 34px;
-  margin-top: 0;
+  margin: 0;
   display: flex;
   align-items: center;
-  margin-bottom: calc(22 * var(--u));
-  padding-right: calc(24 * var(--u));
-  opacity: 0.9;
+  padding-right: calc(40 * var(--u));
 }
 
-.vid-cat {
-  font-family: var(--f-display);
-  font-size: calc(15 * var(--u));
-  font-weight: 700;
-  line-height: calc(20 * var(--u));
-  letter-spacing: calc(-0.3 * var(--u));
-  color: #fff;
-  margin-top: calc(18 * var(--u));
-  margin-bottom: calc(8 * var(--u));
-  padding-top: calc(14 * var(--u));
-  padding-right: calc(24 * var(--u));
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+/* ── Espaçamento geral da lista ──
+   Regra de ouro pedida: a distância entre o título de uma
+   secção e o seu primeiro item é maior do que a distância entre
+   itens dentro dessa mesma secção — para o agrupamento visual
+   ficar claro. A distância entre o fim de uma secção e a régua
+   da secção seguinte é sempre igual à distância entre essa régua
+   e o título que vem depois dela (ritmo vertical consistente). */
+
+/* Bloco "cabeçalho da app" (Demonstração) — espaço generoso até
+   à primeira categoria, maior que tudo o que vem a seguir. */
+.vid-title-main {
+  margin-bottom: calc(40 * var(--u));
 }
-/* A primeira categoria não tem linha por cima — fica colada
-   ao cabeçalho "Demonstração", sem separador a meio do nada. */
-.vid-cat:first-of-type {
+
+.vid-cat-wrap {
+  margin-top: calc(28 * var(--u));
+  padding-top: calc(28 * var(--u));
+  padding-right: calc(24 * var(--u));
+  border-top: 1px solid #fff;
+}
+.vid-cat-wrap:first-of-type {
   border-top: none;
   padding-top: 0;
-  margin-top: calc(18 * var(--u));
+  margin-top: 0;
+}
+.vid-cat {
+  font-family: var(--f-display);
+  font-size: calc(17 * var(--u));
+  font-weight: 700;
+  line-height: calc(20 * var(--u));
+  letter-spacing: calc(-0.2 * var(--u));
+  color: #fff;
+  margin: 0 0 calc(20 * var(--u)) 0;
 }
 
 /* Item de vídeo na sidebar.
    Sem traços verticais "|" antes do texto — ruído visual
    inútil. A única indicação de seleção é a barra de progresso
-   dinâmica (.vid-pb/.vid-pf) — sem linha estática adicional. */
+   dinâmica (.vid-pb/.vid-pf) — sem linha estática adicional.
+   Sem numeração — só o título. */
 .vid-item-row {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: calc(7 * var(--u)) calc(24 * var(--u)) calc(8 * var(--u)) 0;
-  margin-bottom: calc(2 * var(--u));
+  padding: 0 calc(24 * var(--u)) 0 0;
+  margin-bottom: calc(14 * var(--u));
   cursor: pointer;
   background: none;
   border: none;
   text-align: left;
   width: 100%;
+}
+.vid-item-row:last-child {
+  margin-bottom: 0;
 }
 .vid-item-title {
   font-family: var(--f-label);
@@ -220,6 +229,12 @@
   border-radius: 1px;
 }
 
+/* Espaço livre generoso no final da sidebar, depois do último
+   item — para a lista não terminar a colar ao fundo do ecrã. */
+.vid-sidebar-content {
+  padding-bottom: calc(60 * var(--u));
+}
+
 /* ── Área principal do vídeo ── */
 .vid-main {
   flex: 1;
@@ -249,9 +264,11 @@
   pointer-events: none;
 }
 /* Poster estático (thumbnail) mostrado antes do player pesado
-   carregar — ver setupLazyLoad() em videos.js. É só uma <img>,
-   não precisa do fade controlado por is-playing (não há flash
-   de UI nativa a esconder numa imagem). */
+   carregar — ver setupLazyLoad() em videos.js. Cobre sempre o
+   fundo da área de vídeo, mesmo antes de qualquer item ter sido
+   escolhido manualmente, para nunca dar a entender que o vídeo
+   "não está linkado" — mostra-se sempre uma pré-visualização
+   real do conteúdo do YouTube. */
 .vid-poster {
   position: absolute;
   inset: 0;
@@ -283,32 +300,19 @@
   }
 }
 .vid-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  text-align: center;
-  padding: 40px;
-}
-.vid-placeholder .ring {
-  width: 72px;
-  height: 72px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: none;
 }
 
-/* Overlay de contexto (categoria, título, descrição, autoplay) */
+/* Overlay de contexto (título, descrição, autoplay).
+   Cor sólida (sem degradê) usando a cor terciária do site —
+   o verde-água escuro — em vez do gradiente subtil anterior. */
 .vid-context {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  background: linear-gradient(to top, rgba(10, 30, 36, 0.95) 0%, rgba(10, 30, 36, 0.65) 55%, transparent 100%);
+  background: rgba(12, 40, 48, 0.92);
   padding: max(16px, calc(32 * var(--u))) max(20px, calc(40 * var(--u))) max(20px, calc(28 * var(--u)));
   display: flex;
   justify-content: space-between;
@@ -321,14 +325,6 @@
   flex-direction: column;
   gap: 6px;
   margin-left: calc(38 * var(--u));
-}
-/* Nota: sem text-transform uppercase — nunca usar tudo em maiúsculas */
-.vid-ctx-cat {
-  font-family: var(--f-label);
-  font-size: max(10px, calc(13 * var(--u)));
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: var(--accent);
 }
 .vid-ctx-title {
   font-family: var(--f-display);
@@ -425,17 +421,30 @@
     display: none;
   }
   .vid-title-main {
-    font-size: 12px;
-    margin-bottom: 10px;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .vid-cat-wrap {
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+  .vid-cat-wrap:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
   }
   .vid-cat {
     font-size: 12px;
     line-height: 16px;
-    margin-top: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  .vid-item-row {
+    margin-bottom: 8px;
   }
   .vid-item-title {
     font-size: 14px;
+  }
+  .vid-sidebar-content {
+    padding-bottom: 24px;
   }
   .vid-main {
     flex: 1;

@@ -195,7 +195,11 @@ const VideoGallery = (() => {
 
     if (hasRealId(video)) {
       if (loadPlayer) {
-        elPlaceholder.style.display = 'flex';
+        elPlaceholder.style.display = 'none';
+        elFrameWrap.style.display = 'block';
+        elFrameWrap.classList.remove('is-playing', 'has-player');
+        elFrameWrap.innerHTML =
+          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" loading="lazy">`;
         if (apiReady) {
           createPlayer(video.id);
         } else {
@@ -213,9 +217,13 @@ const VideoGallery = (() => {
           `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" loading="lazy">`;
       }
     } else {
-      elPlaceholder.style.display = 'flex';
-      elFrameWrap.style.display = 'none';
-      elFrameWrap.innerHTML = '';
+      // Vídeo ainda sem ID real associado (item por adicionar em
+      // js/data.js). Mesmo assim nunca se mostra uma mensagem do
+      // tipo "vídeo a adicionar" — isso dava a entender que o
+      // site está incompleto. Em vez disso, mantém-se visível o
+      // último frame/poster que já estava no ecrã, como se fosse
+      // só uma pausa antes do conteúdo carregar.
+      elPlaceholder.style.display = 'none';
     }
   }
 

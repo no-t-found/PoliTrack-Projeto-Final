@@ -167,7 +167,9 @@
       <div class="vid-sidebar-content" id="vid-sidebar-content">
         <p class="vid-title-main">Demonstração</p>
 
-        <p class="vid-cat">Descoberta</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Descoberta</p>
+        </div>
         <button class="vid-item-row active" onclick="selectVid(0)" id="vi-0">
           <p class="vid-item-title">Home Page</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-0"></div></div>
@@ -177,7 +179,9 @@
           <div class="vid-pb"><div class="vid-pf" id="vp-1"></div></div>
         </button>
 
-        <p class="vid-cat">Pesquisa</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Pesquisa</p>
+        </div>
         <button class="vid-item-row" onclick="selectVid(2)" id="vi-2">
           <p class="vid-item-title">Busca semântica</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-2"></div></div>
@@ -187,7 +191,9 @@
           <div class="vid-pb"><div class="vid-pf" id="vp-3"></div></div>
         </button>
 
-        <p class="vid-cat">Partidos</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Partidos</p>
+        </div>
         <button class="vid-item-row" onclick="selectVid(4)" id="vi-4">
           <p class="vid-item-title">Por grupo parlamentar</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-4"></div></div>
@@ -197,19 +203,25 @@
           <div class="vid-pb"><div class="vid-pf" id="vp-5"></div></div>
         </button>
 
-        <p class="vid-cat">Detalhe</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Detalhe</p>
+        </div>
         <button class="vid-item-row" onclick="selectVid(6)" id="vi-6">
           <p class="vid-item-title">Iniciativa</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-6"></div></div>
         </button>
 
-        <p class="vid-cat">Pessoal</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Pessoal</p>
+        </div>
         <button class="vid-item-row" onclick="selectVid(7)" id="vi-7">
           <p class="vid-item-title">Perfil</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-7"></div></div>
         </button>
 
-        <p class="vid-cat">Sistema de Design</p>
+        <div class="vid-cat-wrap">
+          <p class="vid-cat">Sistema de Design</p>
+        </div>
         <button class="vid-item-row" onclick="selectVid(8)" id="vi-8">
           <p class="vid-item-title">Identidade visual</p>
           <div class="vid-pb"><div class="vid-pf" id="vp-8"></div></div>
@@ -222,10 +234,8 @@
     </nav>
 
     <div class="vid-main" id="vid-main">
-      <div class="vid-placeholder" id="vid-placeholder">
+      <div class="vid-placeholder" id="vid-placeholder" style="display:none">
         <div class="ring"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
-        <p style="font-size:16px;font-weight:800;color:white;margin-bottom:4px;font-family:var(--f-label)">Vídeos a adicionar</p>
-        <p style="font-family:var(--f-label);font-size:11px;color:var(--muted)">Edita js/data.js e substitui os VIDEO_ID</p>
       </div>
       <div id="vid-frame-wrap" style="position:absolute;inset:0;display:none"></div>
 
