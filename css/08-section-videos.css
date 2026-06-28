@@ -130,7 +130,7 @@
   margin: 0;
   display: flex;
   align-items: center;
-  padding-right: calc(40 * var(--u));
+  padding-right: calc(20 * var(--u));
 }
 
 /* ── Espaçamento geral da lista ──
@@ -139,18 +139,19 @@
    itens dentro dessa mesma secção — para o agrupamento visual
    ficar claro. A distância entre o fim de uma secção e a régua
    da secção seguinte é sempre igual à distância entre essa régua
-   e o título que vem depois dela (ritmo vertical consistente). */
+   e o título que vem depois dela (ritmo vertical consistente).
+   Todos os valores a 50% do que eram antes. */
 
 /* Bloco "cabeçalho da app" (Demonstração) — espaço generoso até
    à primeira categoria, maior que tudo o que vem a seguir. */
 .vid-title-main {
-  margin-bottom: calc(40 * var(--u));
+  margin-bottom: calc(20 * var(--u));
 }
 
 .vid-cat-wrap {
-  margin-top: calc(28 * var(--u));
-  padding-top: calc(28 * var(--u));
-  padding-right: calc(24 * var(--u));
+  margin-top: calc(14 * var(--u));
+  padding-top: calc(14 * var(--u));
+  padding-right: calc(12 * var(--u));
   border-top: 1px solid #fff;
 }
 .vid-cat-wrap:first-of-type {
@@ -165,7 +166,7 @@
   line-height: calc(20 * var(--u));
   letter-spacing: calc(-0.2 * var(--u));
   color: #fff;
-  margin: 0 0 calc(20 * var(--u)) 0;
+  margin: 0 0 calc(10 * var(--u)) 0;
 }
 
 /* Item de vídeo na sidebar.
@@ -177,8 +178,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 0 calc(24 * var(--u)) 0 0;
-  margin-bottom: calc(14 * var(--u));
+  padding: 0 calc(12 * var(--u)) 0 0;
+  margin-bottom: calc(7 * var(--u));
   cursor: pointer;
   background: none;
   border: none;
@@ -232,7 +233,7 @@
 /* Espaço livre generoso no final da sidebar, depois do último
    item — para a lista não terminar a colar ao fundo do ecrã. */
 .vid-sidebar-content {
-  padding-bottom: calc(60 * var(--u));
+  padding-bottom: calc(30 * var(--u));
 }
 
 /* ── Área principal do vídeo ── */
@@ -312,7 +313,6 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background: rgba(12, 40, 48, 0.92);
   padding: max(16px, calc(32 * var(--u))) max(20px, calc(40 * var(--u))) max(20px, calc(28 * var(--u)));
   display: flex;
   justify-content: space-between;
@@ -330,7 +330,7 @@
   font-family: var(--f-display);
   font-size: max(20px, calc(30 * var(--u)));
   font-weight: 400;
-  color: #fff;
+  color: var(--primary);
   letter-spacing: -0.02em;
   line-height: 1.1;
 }

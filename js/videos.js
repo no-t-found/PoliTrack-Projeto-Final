@@ -279,6 +279,19 @@ const VideoGallery = (() => {
     elToggle.setAttribute('aria-label', sidebarCollapsed ? 'Mostrar lista de vídeos' : 'Ocultar lista de vídeos');
   }
 
+  /** Quando o rato sai da sidebar, esta oculta-se automaticamente
+   *  — não é preciso clicar no botão. Aplica-se sempre que a
+   *  sidebar está aberta, seja porque a pessoa clicou no botão
+   *  ou só passou o rato por cima enquanto estava colapsada. */
+  function collapseOnMouseLeave() {
+    if (!sidebarCollapsed) {
+      sidebarCollapsed = true;
+      elSidebar.classList.add('collapsed');
+      elToggle.setAttribute('aria-expanded', 'false');
+      elToggle.setAttribute('aria-label', 'Mostrar lista de vídeos');
+    }
+  }
+
   function init() {
     elFrameWrap   = document.getElementById('vid-frame-wrap');
     elPlaceholder = document.getElementById('vid-placeholder');
@@ -294,6 +307,7 @@ const VideoGallery = (() => {
     elMainArea.addEventListener('mouseleave', resume);
 
     elToggle.addEventListener('click', toggleSidebar);
+    elSidebar.addEventListener('mouseleave', collapseOnMouseLeave);
 
     // Estado inicial leve: mostra o título/descrição do primeiro
     // vídeo e um poster estático (thumbnail), sem carregar nada
