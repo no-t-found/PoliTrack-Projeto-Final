@@ -69,7 +69,7 @@ const VIDEOS = [
     desc: 'Paleta de cor, tipografia — PP Neue Machina, Power Grotesk e Neue Haas Grotesk — tokens e componentes iOS.'
   },
   {
-    id: 'VIDEO_ID_10',
+    id: 'B-2S-Q3gu78',
     cat: 'Sistema de Design',
     title: 'Ícones & Proponentes',
     desc: 'Sistema de 18 ícones para proponentes parlamentares — grelha consistente, adaptados ao contexto da app.'

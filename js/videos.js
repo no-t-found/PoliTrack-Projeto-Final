@@ -28,6 +28,7 @@ const VideoGallery = (() => {
   let qualityCheckTimer = null;
   let loopCount = 0;
   let videoDuration = null;
+  let progressBarActive = false;
 
   // referências DOM (preenchidas em init)
   let elFrameWrap, elPlaceholder, elTitle, elDesc, elCountdown, elAutonext;
@@ -99,11 +100,7 @@ const VideoGallery = (() => {
           enforceTopQuality(e.target);
           setTimeout(() => enforceTopQuality(e.target), 1000);
 
-          // Duração real do vídeo — usada para sincronizar a
-          // barra de progresso visual com o loop verdadeiro,
-          // em vez de um tempo fixo arbitrário.
           loopCount = 0;
-          videoDuration = e.target.getDuration() || CONFIG.videoDurationSec;
           e.target.playVideo();
         },
         onStateChange: (e) => {
@@ -113,6 +110,17 @@ const VideoGallery = (() => {
             elPlaceholder.style.display = 'none';
             elFrameWrap.classList.add('is-playing');
             enforceTopQuality(e.target);
+
+            // Duração real do vídeo — só fica disponível de
+            // forma fiável depois do estado PLAYING (em onReady
+            // o YouTube ainda não carregou os metadados, e
+            // getDuration() devolve 0, o que desincronizava a
+            // barra de progresso e fazia o vídeo avançar antes
+            // ou depois do momento certo).
+            const realDuration = e.target.getDuration();
+            if (realDuration > 0) {
+              videoDuration = realDuration;
+            }
             startProgressBar();
 
             // Verificação periódica: o YouTube pode reduzir a
@@ -144,6 +152,7 @@ const VideoGallery = (() => {
             } else {
               e.target.seekTo(0);
               e.target.playVideo();
+              progressBarActive = false;
               startProgressBar();
             }
           }
@@ -166,6 +175,7 @@ const VideoGallery = (() => {
     currentIndex = index;
     loopCount = 0;
     videoDuration = null;
+    progressBarActive = false;
 
     // atualiza estado ativo na sidebar
     document.querySelectorAll('.vid-item-row').forEach((el, i) => {
@@ -232,6 +242,14 @@ const VideoGallery = (() => {
    *  real do vídeo (detetada em onReady) — não um valor fixo.
    *  Reinicia a cada loop, já que o vídeo recomeça do zero. */
   function startProgressBar() {
+    // Evita reiniciar a barra/contagem se o vídeo já estava a
+    // reproduzir e só houve um soluço momentâneo de buffering —
+    // o YouTube pode disparar PLAYING mais de uma vez para o
+    // mesmo vídeo, e reiniciar a barra cada vez dessincronizava
+    // o tempo mostrado do tempo real restante.
+    if (progressBarActive) return;
+    progressBarActive = true;
+
     clearInterval(countdownTimer);
 
     const duration = videoDuration || CONFIG.videoDurationSec;
