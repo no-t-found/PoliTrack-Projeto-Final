@@ -68,7 +68,7 @@
 
 .dl-qr-row {
   display: flex;
-  gap: calc(40 * var(--u));
+  gap: calc(60 * var(--u));
   align-items: flex-start;
 }
 .dl-qr-col {
@@ -78,8 +78,8 @@
   align-items: center;
 }
 .dl-qr {
-  width: calc(220 * var(--u));
-  height: calc(220 * var(--u));
+  width: calc(315 * var(--u));
+  height: calc(315 * var(--u));
   flex-shrink: 0;
 }
 .dl-qr img {
@@ -89,8 +89,8 @@
   border-radius: calc(12 * var(--u));
 }
 .dl-store-btn {
-  height: calc(60 * var(--u));
-  width: calc(208 * var(--u));
+  height: calc(86 * var(--u));
+  width: calc(299 * var(--u));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,16 +142,21 @@
   min-width: 0;
 }
 .dl-version-line {
-  width: 1px;
+  width: calc(4 * var(--u));
   height: calc(19 * var(--u));
-  background: #113742;
   flex-shrink: 0;
+}
+.dl-version-line img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .dl-version-label {
   font-family: var(--f-label);
-  font-size: calc(15 * var(--u));
+  font-size: calc(19 * var(--u));
   font-weight: 400;
-  letter-spacing: calc(-0.15 * var(--u));
+  letter-spacing: calc(-0.19 * var(--u));
   color: #113742;
   white-space: nowrap;
   overflow: hidden;
