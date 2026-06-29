@@ -1,11 +1,11 @@
 /* ════════════════════════════════════════════════════════════
-   SECÇÃO 6 — DOWNLOAD
-   Frame Figma: node 528-13355
-   Fundo cinza — única secção com esta variante.
+   SECÇÃO 6 — DOWNLOAD ("Leva contigo, vê o que vem...")
+   Frame Figma: node 642-51625
+   Fundo claro (mesmo tom do manifesto) — texto em teal escuro.
 ═══════════════════════════════════════════════════════════════ */
 
 #s6 {
-  background: var(--bg-dl);
+  background: var(--bg-lt);
   display: flex;
   flex-direction: column;
   padding: calc(60 * var(--u)) calc(75 * var(--u)) calc(50 * var(--u));
@@ -16,6 +16,25 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+/* Duas colunas: texto + QR codes à esquerda, vídeo + labels de
+   versão à direita — espelha a divisão do frame original. */
+.dl-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: calc(40 * var(--u));
+  flex: 1;
+  min-height: 0;
+}
+
+.dl-left {
+  display: flex;
+  flex-direction: column;
+  gap: calc(45 * var(--u));
+  flex-shrink: 0;
+  padding-top: calc(20 * var(--u));
 }
 
 .dl-top {
@@ -30,8 +49,8 @@
   font-weight: 400;
   line-height: calc(127 * var(--u));
   letter-spacing: calc(-0.3 * var(--u));
-  color: #fff;
-  white-space: pre-line;
+  color: #113742;
+  white-space: nowrap;
 }
 
 .dl-sub {
@@ -40,24 +59,27 @@
   font-weight: 400;
   line-height: calc(32 * var(--u));
   letter-spacing: calc(-0.48 * var(--u));
-  color: #fff;
-  white-space: nowrap;
+  color: #113742;
+  max-width: calc(820 * var(--u));
+}
+.dl-accent {
+  color: var(--primary);
 }
 
 .dl-qr-row {
   display: flex;
-  gap: calc(30 * var(--u));
+  gap: calc(40 * var(--u));
   align-items: flex-start;
 }
 .dl-qr-col {
   display: flex;
   flex-direction: column;
-  gap: calc(30 * var(--u));
+  gap: calc(35 * var(--u));
   align-items: center;
 }
 .dl-qr {
-  width: calc(270 * var(--u));
-  height: calc(270 * var(--u));
+  width: calc(220 * var(--u));
+  height: calc(220 * var(--u));
   flex-shrink: 0;
 }
 .dl-qr img {
@@ -67,8 +89,8 @@
   border-radius: calc(12 * var(--u));
 }
 .dl-store-btn {
-  height: calc(73.956 * var(--u));
-  width: calc(256 * var(--u));
+  height: calc(60 * var(--u));
+  width: calc(208 * var(--u));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,89 +101,141 @@
   object-fit: contain;
 }
 
-/* Bloco de informação extra (plataforma / instagram / fonte de dados) */
-.dl-extra {
+/* ── Coluna direita: vídeo + labels de versão ── */
+.dl-right {
   display: flex;
   flex-direction: column;
-  gap: calc(16 * var(--u));
-  margin-top: calc(10 * var(--u));
-  max-width: calc(700 * var(--u));
+  gap: calc(15 * var(--u));
+  flex-shrink: 0;
 }
-.dl-extra-row {
+
+/* FRAME-VIDEO — proporção quase quadrada conforme o frame
+   original (858 × 854.527px no Figma). O vídeo enviado já tem
+   essa mesma proporção (858×858), por isso usa-se object-fit
+   cover só como margem de segurança. */
+.dl-video-frame {
+  width: calc(858 * var(--u));
+  height: calc(854.527 * var(--u));
+  border-radius: calc(24 * var(--u));
+  overflow: hidden;
+  background: #0c2830;
+}
+.dl-video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dl-version-row {
   display: flex;
-  gap: calc(32 * var(--u));
-  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(50 * var(--u));
+  padding: 0 calc(10 * var(--u));
+  width: 100%;
 }
-.dl-extra-item {
+.dl-version-item {
   display: flex;
-  flex-direction: column;
-  gap: calc(6 * var(--u));
+  align-items: center;
+  gap: calc(18 * var(--u));
+  flex: 1;
+  min-width: 0;
 }
-.dl-extra-label {
+.dl-version-line {
+  width: 1px;
+  height: calc(19 * var(--u));
+  background: #113742;
+  flex-shrink: 0;
+}
+.dl-version-label {
   font-family: var(--f-label);
-  font-size: calc(11 * var(--u));
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  opacity: 0.8;
+  font-size: calc(15 * var(--u));
+  font-weight: 400;
+  letter-spacing: calc(-0.15 * var(--u));
+  color: #113742;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.dl-extra-value {
-  font-family: var(--f-display);
-  font-size: calc(18 * var(--u));
-  color: #fff;
+
+/* ── Footer — variante clara (texto escuro em vez de branco) ── */
+.dl-footer-bar .sep-dk {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: calc(0.816 * var(--u)) solid #113742;
+}
+.dl-footer-label {
+  color: #113742;
+}
+.dl-footer-num {
+  color: #113742;
 }
 
 /* ════════════════════════════════════════════════════════════
    RESPONSIVO — tablet e mobile
+   Em ecrãs estreitos, a coluna do vídeo desce para debaixo do
+   texto em vez de ficar lado a lado.
 ═══════════════════════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   #s6 {
     padding: 32px 24px 24px;
     overflow-y: auto;
   }
-  .dl-title {
-    font-size: 40px;
-    line-height: 44px;
+  .dl-row {
+    flex-direction: column;
+    gap: 24px;
   }
-  .dl-sub {
-    font-size: 15px;
-    line-height: 20px;
+  .dl-left {
+    padding-top: 0;
+    gap: 24px;
+  }
+  .dl-title {
+    font-size: 36px;
+    line-height: 40px;
     white-space: normal;
   }
+  .dl-sub {
+    font-size: 14px;
+    line-height: 20px;
+    max-width: 100%;
+  }
   .dl-qr-row {
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .dl-qr {
-    width: 130px;
-    height: 130px;
-  }
-  .dl-store-btn {
-    height: 40px;
-    width: 150px;
-  }
-  .dl-extra-row {
     gap: 20px;
   }
-  .dl-extra-label {
-    font-size: 11px;
+  .dl-qr {
+    width: 110px;
+    height: 110px;
   }
-  .dl-extra-value {
-    font-size: 13px;
+  .dl-store-btn {
+    height: 36px;
+    width: 130px;
+  }
+  .dl-right {
+    width: 100%;
+    align-items: center;
+  }
+  .dl-video-frame {
+    width: min(100%, 320px);
+    height: min(100%, 320px);
+  }
+  .dl-version-row {
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+  }
+  .dl-version-label {
+    font-size: 11px;
   }
 }
 
 @media (max-width: 480px) {
   .dl-title {
-    font-size: 30px;
-    line-height: 34px;
+    font-size: 28px;
+    line-height: 32px;
   }
   .dl-qr-row {
     justify-content: center;
     width: 100%;
-  }
-  .dl-extra-row {
-    flex-direction: column;
-    gap: 12px;
   }
 }
