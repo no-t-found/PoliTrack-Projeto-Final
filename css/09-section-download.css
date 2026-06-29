@@ -24,7 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: calc(40 * var(--u));
+  gap: calc(20 * var(--u));
   flex: 1;
   min-height: 0;
 }

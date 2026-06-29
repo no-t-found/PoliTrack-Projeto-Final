@@ -15,9 +15,9 @@
  */
 const VIDEOS = [
   {
-    id: 'VIDEO_ID_01',
+    id: 'FMxj9qku-XA',
     cat: 'Descoberta',
-    title: 'Home Page',
+    title: 'Navegação',
     desc: 'Feed principal de iniciativas legislativas recentes — ponto de entrada da app e acesso rápido a filtros e pesquisa.'
   },
   {
@@ -49,12 +49,6 @@ const VIDEOS = [
     cat: 'Partidos',
     title: 'Por página de partido',
     desc: 'Página de partido com iniciativas recentes, histórico de votações e lista de deputados eleitos.'
-  },
-  {
-    id: 'VIDEO_ID_07',
-    cat: 'Detalhe',
-    title: 'Iniciativa',
-    desc: 'Card expandido — votos por partido, autores, datas, estado atual e timeline do processo legislativo.'
   },
   {
     id: 'IZQEd1NjTH8',
