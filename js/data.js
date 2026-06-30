@@ -18,55 +18,55 @@ const VIDEOS = [
     id: 'FMxj9qku-XA',
     cat: 'Descoberta',
     title: 'Navegação',
-    desc: 'Feed principal de iniciativas legislativas recentes — ponto de entrada da app e acesso rápido a filtros e pesquisa.'
+    desc: 'O ecrã inicial agrega as iniciativas legislativas mais recentes e serve de ponto de entrada para filtros e pesquisa.'
   },
   {
     id: '19FyTLUHRH8',
     cat: 'Descoberta',
     title: 'Temas',
-    desc: 'Navegação por categoria CAP — chip no card ou via filtros — para explorar iniciativas por área temática.'
+    desc: 'As iniciativas são organizadas por categorias temáticas CAP, acessíveis por etiqueta no card ou através dos filtros, que permitem explorar o arquivo legislativo por área '
   },
   {
     id: 'SIRFGLYjfTY',
     cat: 'Pesquisa',
     title: 'Busca semântica',
-    desc: 'Pesquisa por texto livre com motor semântico: resultados incluem iniciativas relacionadas por significado, não só por palavra exata.'
+    desc: 'Pesquisa por linguagem natural: o sistema infere intenção e agrupa resultados por proximidade semântica.'
   },
   {
     id: '1A3uUWz-Bv4',
     cat: 'Pesquisa',
     title: 'Filtros subtrativos',
-    desc: 'Cinco dimensões cumulativas — Legislatura, Tema CAP, Proponente, Resultado e Tipo. Cada seleção afina e condiciona o seguinte.'
+    desc: 'Um sistema de afunilamento progressivo: cada filtro aplicado reduz e refina o universo de resultados disponíveis.'
   },
   {
     id: 'nqF6HKroBgw',
     cat: 'Partidos',
     title: 'Por grupo parlamentar',
-    desc: 'Filtro de proponente na pesquisa — mostra todas as iniciativas de um grupo parlamentar específico.'
+    desc: 'Filtro por proponente: a pesquisa devolve todas as iniciativas associadas a um grupo parlamentar específico.'
   },
   {
     id: 'wSPsm8RnKSo',
     cat: 'Partidos',
     title: 'Por página de partido',
-    desc: 'Página de partido com iniciativas recentes, histórico de votações e lista de deputados eleitos.'
+    desc: 'Uma entrada direta no perfil político de um partido: o que propõe, o histórico de como vota e quem o representa na Assembleia.'
   },
   {
     id: 'IZQEd1NjTH8',
     cat: 'Pessoal',
     title: 'Perfil',
-    desc: 'Página pessoal — preferências, temas seguidos e histórico de iniciativas consultadas.'
+    desc: 'Espaço pessoal onde o utilizador guarda iniciativas, temas que o agradam e o histórico de iniciativas interagidas.'
   },
   {
     id: 'tgmUMnCs2wA',
     cat: 'Sistema de Design',
     title: 'Identidade visual',
-    desc: 'Paleta de cor, tipografia — PP Neue Machina, Power Grotesk e Neue Haas Grotesk — tokens e componentes iOS.'
+    desc: 'Define a linguagem visual da aplicação: variações de logótipos, escolha tipográfica e tokens de cor que garantem coerência entre ecrãs.'
   },
   {
     id: 'B-2S-Q3gu78',
     cat: 'Sistema de Design',
     title: 'Ícones & Cores',
-    desc: 'Sistema de 18 ícones para proponentes parlamentares — grelha consistente, adaptados ao contexto da app.'
+    desc: 'Um sistema de ícones desenhados para representar os proponentes parlamentares, o boletim de voto e as cores associadas.'
   },
 ];
 
