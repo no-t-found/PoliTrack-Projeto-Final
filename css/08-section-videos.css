@@ -331,7 +331,7 @@
   left: 0;
   right: 0;
   z-index: 10;
-  padding: max(16px, calc(32 * var(--u))) max(20px, calc(40 * var(--u))) max(20px, calc(28 * var(--u)));
+  padding: max(16px, calc(32 * var(--u))) max(20px, calc(40 * var(--u))) max(15px, calc(23 * var(--u)));
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -342,7 +342,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-left: calc(34 * var(--u));
+  margin-left: calc(32 * var(--u));
 }
 .vid-ctx-title {
   font-family: var(--f-display);

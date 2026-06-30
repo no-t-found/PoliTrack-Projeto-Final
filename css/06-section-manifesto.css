@@ -114,7 +114,6 @@
   letter-spacing: calc(-0.5838 * var(--u));
   color: #113742;
   white-space: nowrap;
-  opacity: 0.5;
 }
 .mf-stripe {
   flex: 1;
@@ -136,7 +135,6 @@
   font-size: calc(34 * var(--u));
   font-weight: 400;
   color: #113742;
-  mix-blend-mode: overlay;
   white-space: nowrap;
   flex-shrink: 0;
 }

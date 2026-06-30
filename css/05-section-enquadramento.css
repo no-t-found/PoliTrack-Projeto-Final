@@ -52,7 +52,8 @@
    linha do footer (ambos filhos diretos de .s2-inner, sem
    padding lateral próprio). */
 .s2-hero-img {
-  width: 100%;
+  width: calc(100% + 40 * var(--u));
+  margin-left: calc(-20 * var(--u));
   height: auto;
   max-height: 100%;
   object-fit: contain;

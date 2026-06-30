@@ -74,8 +74,9 @@
 .dl-qr-col {
   display: flex;
   flex-direction: column;
-  gap: calc(35 * var(--u));
+  gap: calc(16 * var(--u));
   align-items: center;
+  margin-top: calc(-12 * var(--u));
 }
 .dl-qr {
   width: calc(315 * var(--u));

@@ -165,9 +165,10 @@ const VideoGallery = (() => {
   }
 
   function buildPosterUrl(videoId) {
-    // Thumbnail estática do YouTube — é só uma imagem (alguns KB),
-    // nada a ver com o peso do player/JS da IFrame API.
-    return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    // Thumbnail máxima disponível (1280×720 quando existe).
+    // Se o YouTube não tiver esta versão, o browser recebe uma
+    // imagem preta — mas para os vídeos já publicados é seguro.
+    return `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
   }
 
   function select(index, { loadPlayer = true } = {}) {
@@ -209,7 +210,7 @@ const VideoGallery = (() => {
         elFrameWrap.style.display = 'block';
         elFrameWrap.classList.remove('is-playing', 'has-player');
         elFrameWrap.innerHTML =
-          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" loading="lazy">`;
+          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" fetchpriority="high">`;
         if (apiReady) {
           createPlayer(video.id);
         } else {
@@ -224,7 +225,7 @@ const VideoGallery = (() => {
         elFrameWrap.style.display = 'block';
         elFrameWrap.classList.remove('is-playing', 'has-player');
         elFrameWrap.innerHTML =
-          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" loading="lazy">`;
+          `<img class="vid-poster" src="${buildPosterUrl(video.id)}" alt="" fetchpriority="high">`;
       }
     } else {
       // Vídeo ainda sem ID real associado (item por adicionar em

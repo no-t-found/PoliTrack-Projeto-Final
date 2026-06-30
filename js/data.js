@@ -39,13 +39,13 @@ const VIDEOS = [
     desc: 'Cinco dimensões cumulativas — Legislatura, Tema CAP, Proponente, Resultado e Tipo. Cada seleção afina e condiciona o seguinte.'
   },
   {
-    id: 'VIDEO_ID_05',
+    id: 'nqF6HKroBgw',
     cat: 'Partidos',
     title: 'Por grupo parlamentar',
     desc: 'Filtro de proponente na pesquisa — mostra todas as iniciativas de um grupo parlamentar específico.'
   },
   {
-    id: 'VIDEO_ID_06',
+    id: 'wSPsm8RnKSo',
     cat: 'Partidos',
     title: 'Por página de partido',
     desc: 'Página de partido com iniciativas recentes, histórico de votações e lista de deputados eleitos.'
@@ -65,7 +65,7 @@ const VIDEOS = [
   {
     id: 'B-2S-Q3gu78',
     cat: 'Sistema de Design',
-    title: 'Ícones & Proponentes',
+    title: 'Ícones & Cores',
     desc: 'Sistema de 18 ícones para proponentes parlamentares — grelha consistente, adaptados ao contexto da app.'
   },
 ];

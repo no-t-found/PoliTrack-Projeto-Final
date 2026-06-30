@@ -12,7 +12,7 @@ const Navigation = (() => {
   // Índices de secções com fundo claro — os dots e o botão
   // "início" precisam de uma variante de cor mais escura aqui
   // para manter contraste suficiente (ver css/03-components.css).
-  const LIGHT_SECTIONS = [2]; // S3 — Manifesto ("O que é")
+  const LIGHT_SECTIONS = [2, 4, 5]; // S3 — Manifesto, S6 — Download, S7 — Créditos
 
   let elRoot, elDots, elHomeBtn, elKioskPip, elNavDots;
 
